@@ -1,8 +1,8 @@
 
-version: "1"
+version: "1.0.0"
 services:
-    app: 
-        image: phpmyadmin/phpmyadmin
+    frontend:
+        build: ./frontend
         container_name: phpmyadmin
         ports:
             - "8080:80"
@@ -12,9 +12,23 @@ services:
             - PMA_PASSWORD=rootpassword
         depends_on:
             - db
+    backend:
+        build: ./backend
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./backend:/app
+        working_dir: /app
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydb
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=postgres
+        depends_on:
+            - db
     db:
-        image: mariadb:latest
-        container_name: mariadb
+        image: postgres:latest
+        container_name: postgres
         environment:
             - MYSQL_ROOT_PASSWORD=rootpassword
             - MYSQL_DATABASE=mydatabase
+
