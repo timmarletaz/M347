@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe5711ef-acbe-438c-86cf-3521c8f51061" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/M347.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/devcontainer.json" beforeDir="false" />
-    </list>
+    <list default="true" id="fe5711ef-acbe-438c-86cf-3521c8f51061" name="Changes" comment="Backend initialization" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +40,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Tim Berufsschule/Documents/M347 - Projekt/Backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +49,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Tim Berufsschule\Documents\M347 - Projekt\Backend" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -69,11 +70,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1749038418360</updated>
-      <workItem from="1749038419607" duration="435000" />
+      <workItem from="1749038419607" duration="1079000" />
     </task>
+    <task id="LOCAL-00001" summary="Backend initialization">
+      <option name="closed" value="true" />
+      <created>1749041157512</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1749041157512</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Backend initialization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backend initialization" />
   </component>
 </project>
