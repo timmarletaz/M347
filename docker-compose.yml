@@ -1,0 +1,20 @@
+
+version: "1"
+services:
+    app: 
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        ports:
+            - "8080:80"
+        environment:
+            - PMA_HOST=mariadb
+            - PMA_USER=root
+            - PMA_PASSWORD=rootpassword
+        depends_on:
+            - db
+    db:
+        image: mariadb:latest
+        container_name: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpassword
+            - MYSQL_DATABASE=mydatabase
