@@ -13,8 +13,8 @@ services:
         depends_on:
             - db
     db:
-        image: mariadb:latest
-        container_name: mariadb
+        image: postgres:latest
+        container_name: postgresdb
         environment:
-            - MYSQL_ROOT_PASSWORD=rootpassword
-            - MYSQL_DATABASE=mydatabase
+            - SQL_ROOT_PASSWORD=root
+            - SQL_DATABASE=pollit
