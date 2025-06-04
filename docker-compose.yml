@@ -3,15 +3,14 @@ version: "1.0.0"
 services:
     frontend:
         build: ./frontend
-        container_name: phpmyadmin
         ports:
-            - "8080:80"
-        environment:
-            - PMA_HOST=mariadb
-            - PMA_USER=root
-            - PMA_PASSWORD=rootpassword
+            - "4200:4200"
+        volumes:
+            - ./frontend:/app
+        working_dir: /app
+        command: "npm start"
         depends_on:
-            - db
+            - backend
     backend:
         build: ./backend
         ports:
@@ -20,15 +19,15 @@ services:
             - ./backend:/app
         working_dir: /app
         environment:
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydb
-            - SPRING_DATASOURCE_USERNAME=postgres
-            - SPRING_DATASOURCE_PASSWORD=postgres
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pollit
+            - SPRING_DATASOURCE_USERNAME=root
+            - SPRING_DATASOURCE_PASSWORD=pollit
         depends_on:
             - db
     db:
         image: postgres:latest
-        container_name: postgres
+        container_name: postgresdb
         environment:
-            - MYSQL_ROOT_PASSWORD=rootpassword
-            - MYSQL_DATABASE=mydatabase
-
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=pollit
+            - POSTGRES_DB=pollit
