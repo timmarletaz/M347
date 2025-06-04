@@ -27,8 +27,7 @@ services:
             - db
     db:
         image: postgres:latest
-        container_name: postgres
+        container_name: postgresdb
         environment:
-            - MYSQL_ROOT_PASSWORD=rootpassword
-            - MYSQL_DATABASE=mydatabase
-
+            - SQL_ROOT_PASSWORD=root
+            - SQL_DATABASE=pollit
