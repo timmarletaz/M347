@@ -1,0 +1,95 @@
+@if (isLoading) {
+  <div class="flex justify-center items-center h-screen">
+    <div class="spinner loading loading-spinner text-primary w-12 h-12"></div>
+  </div>
+}
+@if (!isLoading) {
+  <div class="login-container">
+    <div class="artboard phone-4 shadow-lg">
+      <div class="title">
+        <h1>Register Now</h1>
+      </div>
+      <form (ngSubmit)="register()" class="form-container">
+        <label class="input input-bordered flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="h-4 w-4 opacity-70"
+          >
+            <path
+              d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
+            />
+          </svg>
+          <input
+            type="text"
+            class="grow"
+            placeholder="Username"
+            [(ngModel)]="username"
+            id="username"
+            name="username"
+          />
+        </label>
+        <label class="input input-bordered flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="h-4 w-4 opacity-70"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <input
+            type="password"
+            class="grow"
+            [(ngModel)]="password"
+            id="password"
+            name="password"
+            placeholder="*****"
+          />
+        </label>
+        <label class="input input-bordered flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 opacity-70">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+          </svg>
+
+          <input
+          type="email"
+          class="grow"
+          [(ngModel)]="email"
+          id="email"
+          name="email"
+          placeholder="bob.test@test.com"
+          >
+        </label>
+        <button type="submit" class="btn btn-accent">Register</button>
+      </form>
+      <div class="link-container">
+        Already Registered? &nbsp;
+        <a class="link" routerLink="/login">Login</a>
+      </div>
+      @if (message) {
+        <div role="alert" class="alert alert-error error-message">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{{ message }}</span>
+        </div>
+      }
+    </div>
+  </div>
+}
