@@ -1,5 +1,5 @@
+version: "3.8"
 
-version: "1.0.0"
 services:
     frontend:
         build: ./frontend
@@ -8,9 +8,10 @@ services:
         volumes:
             - ./frontend:/app
         working_dir: /app
-        command: "npm start"
+        command: npm start
         depends_on:
             - backend
+
     backend:
         build: ./backend
         ports:
@@ -24,10 +25,13 @@ services:
             - SPRING_DATASOURCE_PASSWORD=pollit
         depends_on:
             - db
+
     db:
         image: postgres:latest
         container_name: postgresdb
         environment:
             - POSTGRES_USER=root
-            - POSTGRES_PASSWORD=pollit
+            - POSTGRES_PASSWORD=Ramini-007
             - POSTGRES_DB=pollit
+        ports:
+            - "5432:5432"
