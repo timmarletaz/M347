@@ -1,5 +1,6 @@
-package com.m347.pollit;
+package com.m347.pollit.entities;
 
+import com.m347.pollit.ElementType;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,13 +22,14 @@ public class Element {
     private Long id;
 
     private String label;
+
     @Enumerated(EnumType.STRING)
     private ElementType type;
+
     @Nullable
     private String placeholder;
 
-    @OneToMany
-    @JoinColumn(name = "answer_id")
+    @OneToMany(mappedBy = "element", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Answer> answers;
 
 }
