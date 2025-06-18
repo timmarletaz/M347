@@ -1,0 +1,34 @@
+POST http://localhost:8080/api/polls/create
+Content-Type: application/json
+token: 3d53d096-5195-4087-93eb-6f2062e234d6
+
+{
+  "description": "Test",
+  "title": "Umfrage zu Test",
+  "elements": [{
+    "label": "Test",
+    "placeholder": "Test Input",
+    "type": "INPUT",
+    "required": false
+  },
+    {
+      "required": true,
+      "type": "EMAIL",
+      "placeholder": "Test",
+      "label": "Hallo"
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/api/polls/QBLE1688
+
+###
+
+POST http://localhost:8080/api/polls/QBLE1688/submit
+Content-Type: application/json
+
+{
+  "values": ["", "tim@tim.com"]
+}
