@@ -1,0 +1,94 @@
+<div class="title-container">
+  <h1 class="font-bold text-4xl">Neue Umfrage erstellen</h1>
+</div>
+
+<!--Titel und Description-->
+
+<div class="addTitle-container">
+  <fieldset class="fieldset w-100">
+    <legend class="fieldset-legend">Title</legend>
+    <input type="text" class="input w-100" placeholder="Umfrage über die Schweiz" name="title" [(ngModel)]="title"/>
+    <p class="label">Required</p>
+  </fieldset>
+
+  <fieldset class="fieldset w-100">
+    <legend class="fieldset-legend">Description</legend>
+    <input type="text" class="input w-100" placeholder="Weitere Informationen" name="description" [(ngModel)]="description"/>
+    <p class="label">Required</p>
+  </fieldset>
+</div>
+
+<!--Erstellen Button-->
+<div class="title-container">
+  <button class="btn btn-xs btn-primary sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl w-3rem" (click)="openDialog()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+      <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+    </svg>
+    Neue Frage Erstellen
+  </button>
+</div>
+
+<dialog #createQuestion class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Add new Question</h3>
+
+    <div class="form-control w-full max-w-xs mt-4">
+      <label class="label">
+        <span class="label-text">Label</span>
+      </label>
+      <input type="text" id="label" placeholder="Label" class="input input-bordered w-full max-w-xs" [(ngModel)]="label" required/>
+    </div>
+
+    <div class="form-control w-full max-w-xs mt-4">
+      <label class="label">
+        <span class="label-text">Type</span>
+      </label>
+      <select class="select" id="type" name="select" [(ngModel)]="type" required>
+        <option disabled selected>Pick a Type</option>
+        <option ngValue="TEXT">Text</option>
+        <option ngValue="CHECKBOX">Checkbox</option>
+        <option ngValue="SLIDER">Slider</option>
+        <option ngValue="DATE">Date</option>
+        <option ngValue="EMAIL">E-Mail</option>
+        <option ngValue="NUMBER">Number</option>
+        <option ngValue="INPUT">Input</option>
+      </select>
+    </div>
+
+    <div class="form-control w-full max-w-xs mt-4">
+      <label class="label">
+        <span class="label-text">Placeholder</span>
+      </label>
+      <input type="text" id="placeholder" placeholder="Placeholder" class="input input-bordered w-full max-w-xs" [(ngModel)]="placeholder" required/>
+    </div>
+
+    <div class="form-control w-full max-w-xs mt-4">
+      <label class="label">
+        <span class="label-text">Required?</span>
+      </label>
+      <input type="checkbox" id="checkbox" class="w-full " [(ngModel)]="required" required/>
+    </div>
+
+    <p class="py-4">Press ESC key or click the button below to close</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button (click)="createNewQuestion()" class="btn">Save</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<!--Fragen-->
+@for (question of questions; track question) {
+  @if (questions.length > 0) {
+    <div class="card w-96 bg-base-100 card-lg shadow-sm">
+      <div class="card-body">
+        <h2 class="card-title">{{ question.label }}</h2>
+        <p>{{ question.type }}</p>
+        <div class="justify-end card-actions">
+          <button class="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  }
+}
