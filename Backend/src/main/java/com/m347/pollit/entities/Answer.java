@@ -22,5 +22,16 @@ public class Answer {
     @JoinColumn(name="element_id")
     private Element element;
 
+    private int count = 1;
+
     private String value;
+
+    public void increaseCount() {
+        count++;
+    }
+
+    public Answer(Element element, String value) {
+        this.element = element;
+        this.value = value;
+    }
 }
