@@ -3,10 +3,14 @@
   height: 100%;
 }
 
-input {
+input, select {
   border: 1px solid gray;
   &:focus {
     outline: none;
     border: 2px solid gray;
   }
+}
+
+::placeholder {
+  color: #656565;
 }

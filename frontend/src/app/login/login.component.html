@@ -8,5 +8,8 @@
     <div class="w-full flex justify-end mt-5">
       <button class="mt-3 special-button px-4 py-2 poppins-medium bg-indigo-500 rounded text-white cursor-pointer hover:bg-indigo-600" [disabled]="isLoginValid()" (click)="login()">Anmelden</button>
     </div>
+    <div class="flex gap-2 justify-center mt-5">
+    <p class="text-center poppins-regular">Noch kein Konto?</p><a routerLink="/register" class="z-20 poppins-regular link">Registrieren</a>
+    </div>
   </div>
 </div>

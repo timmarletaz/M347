@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -25,7 +26,6 @@ export class LoginComponent {
 
   login() {
     this.loading = true;
-    console.log("Hallo");
     this.authService.loginRequest(this.email, this.password);
     this.authService.getUser().subscribe(user => {
       if(user !== null) {
