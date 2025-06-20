@@ -6,6 +6,7 @@ import com.m347.pollit.exceptions.CommonException;
 import com.m347.pollit.responses.PollPreviewResponse;
 import com.m347.pollit.services.PollService;
 import com.m347.pollit.services.UserService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -30,6 +31,15 @@ public class UserController {
         if(this.userService.getTokenState(token)) {
             UserEntity user = this.userService.extractUserFromToken(token);
             return user.getPolls().stream().map(existingPoll -> new PollPreviewResponse(existingPoll.getUuid(), existingPoll.getTitle(), existingPoll.getDescription())).collect(Collectors.toList());
+        }
+        throw new CommonException("Ungültiges Token");
+    }
+
+    @GetMapping()
+    public UserEntity getUser(@RequestHeader String token) {
+        if(this.userService.getTokenState(token)) {
+            UserEntity user = this.userService.extractUserFromToken(token);
+            return user;
         }
         throw new CommonException("Ungültiges Token");
     }

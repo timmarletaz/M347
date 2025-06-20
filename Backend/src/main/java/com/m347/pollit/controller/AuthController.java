@@ -1,5 +1,6 @@
 package com.m347.pollit.controller;
 
+import com.m347.pollit.entities.TokenEntity;
 import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
@@ -21,14 +22,14 @@ public class AuthController {
     @PostMapping("register")
     public LoginResponse register(@RequestBody RegisterRequest registerRequest) {
         UserEntity user = userService.register(registerRequest);
-        String token = userService.generateToken(user);
-        return new LoginResponse(token, user);
+        TokenEntity token = userService.generateToken(user);
+        return new LoginResponse(token.getToken(),token.getExpires(), user);
     }
 
     @PostMapping("login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         UserEntity user = this.userService.login(loginRequest);
-        String token = userService.generateToken(user);
-        return new LoginResponse(token, user);
+        TokenEntity token = userService.generateToken(user);
+        return new LoginResponse(token.getToken(),token.getExpires(), user);
     }
 }
