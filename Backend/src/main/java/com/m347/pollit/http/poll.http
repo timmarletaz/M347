@@ -16,17 +16,47 @@ token: 468aa365-2169-4d68-a921-4e57e9f60b05
       "type": "EMAIL",
       "placeholder": "Test",
       "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "CHECKBOX",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "DATE",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "NUMBER",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "SLIDER",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "TEXT",
+      "placeholder": "Test",
+      "label": "Hallo"
     }
   ]
 }
 
 ###
 
-GET http://localhost:8080/api/polls/SZPJ9354
+GET http://localhost:8080/api/polls/WQBH5851
 
 ###
 
-POST http://localhost:8080/api/polls/SZPJ9354/submit
+POST http://localhost:8080/api/polls/ISFW7502/submit
 Content-Type: application/json
 
 {
@@ -35,12 +65,12 @@ Content-Type: application/json
 
 ###
 
-GET localhost:8080/api/polls/SZPJ9354/admin
+GET localhost:8080/api/polls/WQBH5851/admin
 token: 468aa365-2169-4d68-a921-4e57e9f60b05
 
 ###
 
-GET localhost:8080/api/polls/SZPJ9354/all/2
+GET localhost:8080/api/polls/WQBH5851/all/15
 token: 468aa365-2169-4d68-a921-4e57e9f60b05
 
 ###
