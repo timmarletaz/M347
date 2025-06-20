@@ -1,6 +1,7 @@
 export interface Poll {
   id: number;
   title: string;
+  uuid: string;
   description: string;
   creator: {
     firstname: string;

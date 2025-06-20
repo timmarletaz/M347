@@ -28,10 +28,11 @@
                      [id]="'element-' + element.id" [formControlName]="element.id.toString()">
             }
             @case ("CHECKBOX") {
+              <p class="poppins-regular">{{ element.label }}</p>
               <div class="flex gap-3">
                 <input type="checkbox" class="w-6 h-6" style="accent-color: #007595" [placeholder]="element.placeholder"
                        [required]="element.required" [formControlName]="element.id.toString()" [id]="'element-' + element.id">
-                <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+                <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.placeholder }}{{ isElementRequired(element) }}</label>
               </div>
             }
             @case ("DATE") {

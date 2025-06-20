@@ -69,4 +69,18 @@ export class AuthService {
     return this.pollPreview.asObservable();
   }
 
+  register(email: string, password: string, vorname: string, nachname: string) {
+    this.httpClient.post<LoginResponse>(this.baseUrl + "auth/register", {email: email, firstname: vorname, lastname: nachname, password: password}, {headers: new HttpHeaders({
+        "ContentType": "application/json"
+      })}).subscribe(response => {
+          localStorage.setItem("token", response.token);
+          console.log(localStorage.getItem("token"));
+          localStorage.setItem("exp", response.expires.toString());
+          this.user.next(response.user);
+          this.alertService.showToast("Erfolgreich Registriert", "success", 2500);
+    }, error => {
+        this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
+    });
+  }
+
 }

@@ -1,0 +1,15 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+input {
+  border: 2px solid gray;
+  &:hover {
+    outline: none;
+  }
+}
+
+button:disabled {
+  background-color: grey;
+}

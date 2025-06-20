@@ -3,7 +3,10 @@
 } @else if (user) {
   <div class="w-full h-full flex flex-col py-8 overflow-y-auto">
     <h1 class="mb-5 text-2xl poppins-bold text-center">Guten Tag {{ user.firstname }}</h1>
-    <button class="special-button mb-4 self-end mr-5 px-4 py-2 bg-indigo-500 rounded-md text-white poppins-regular cursor-pointer" (click)="createNewPoll()">Neue Umfrage</button>
+    <button
+      class="special-button mb-4 self-end mr-5 px-4 py-2 bg-indigo-500 rounded-md text-white poppins-regular cursor-pointer"
+      (click)="createNewPoll()">Neue Umfrage
+    </button>
     @if (pollsLoading) {
       <app-loader></app-loader>
     } @else if (pollPreviews) {
@@ -18,25 +21,111 @@
         }
       </div>
     }
-  </div>
-}
-@if(creatingNewPoll){
-  <div class="h-full w-full absolute bg-gray-50 top-0 p-4 flex flex-col">
-    <button class="special-button self-end cursor-pointer" (click)="abortNewPoll()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-8">
-        <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+    <div class="flex-grow"></div>
+    <button (click)="logout()"
+            class="justify-self-end cursor-pointer special-button bg-red-400 poppins-regular rounded px-6 py-3 w-fit self-center mt-7 text-white flex">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+        <path fill-rule="evenodd"
+              d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6Zm-5.03 4.72a.75.75 0 0 0 0 1.06l1.72 1.72H2.25a.75.75 0 0 0 0 1.5h10.94l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 0 0-1.06 0Z"
+              clip-rule="evenodd"/>
       </svg>
+      Ausloggen
     </button>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <input class="w-full h-8 mt-4 px-2 py-5 rounded" placeholder="Titel">
-      <input class="w-full h-8 mt-4 px-2 py-5 rounded" placeholder="Beschreibung">
-      <div class="flex flex-col w-full mt-3" #previewDiv>
-        <button class="poppins-regular" (click)="elementOverview=true">Element Hinzufügen</button>
-      </div>
-    </form>
   </div>
 }
-@if(elementOverview) {
-  <div class="w-full h-1/2 mx-3 bg-red-300 absolute top-50 left-50" style="transform: translate(-50%, -50%)"></div>
+@if (creatingNewPoll) {
+  <div class="h-full w-full absolute bg-gray-50 top-0 left-0 p-4 flex flex-col items-center">
+    <div class="w-full flex flex-col max-w-screen-md">
+      <button class="special-button self-end cursor-pointer" (click)="abortNewPoll()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-8">
+          <path
+            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/>
+        </svg>
+      </button>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input class="w-full h-8 mt-4 px-2 py-5 rounded" placeholder="Titel" formControlName="title">
+        <input class="w-full h-8 mt-4 px-2 py-5 rounded" placeholder="Beschreibung" formControlName="description">
+        <div class="flex flex-col w-full mt-3">
+          <button class="poppins-regular" (click)="elementOverview=true" type="button">Element Hinzufügen</button>
+        </div>
+      </form>
+    </div>
+    @for (element of elements; track element.label) {
+      <div class="flex flex-col gap-3 w-full mt-5 max-w-screen-md">
+        @switch (element.type) {
+          @case ("INPUT") {
+            <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            <input [placeholder]="element.placeholder" class="poppins-regular rounded-md"
+                   [required]="element.required">
+          }
+          @case ("EMAIL") {
+            <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            <input [placeholder]="element.placeholder" class="poppins-regular rounded-md" type="email"
+                   [required]="element.required">
+          }
+          @case ("CHECKBOX") {
+            <div class="flex gap-3">
+              <input type="checkbox" class="w-6 h-6" style="accent-color: #007595" [placeholder]="element.placeholder"
+                     [required]="element.required">
+              <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            </div>
+          }
+          @case ("DATE") {
+            <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            <input type="date" class="w-auto rounded-md" style="accent-color: #007595"
+                   [placeholder]="element.placeholder" [required]="element.required">
+          }
+          @case ("NUMBER") {
+            <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            <input type="number" class="w-auto rounded-md" [placeholder]="element.placeholder"
+                   [required]="element.required">
+          }
+          @case ("SLIDER") {
+            <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            <input type="range" class="w-full h-4 accent-blue-500">
+          }
+          @case ("TEXT") {
+            <label class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+            <textarea class="w-full rounded-md" [placeholder]="element.placeholder"
+                      [required]="element.required"></textarea>
+          }
+        }
+      </div>
+    }
+    <div class="fixed bottom-4 flex justify-center w-full px-4">
+      <button class="w-full max-w-64 poppins-regular" (click)="onSubmit()">Speichern</button>
+    </div>
+  </div>
+}
+@if (elementOverview) {
+  <div class="w-full h-full absolute top-0 left-0 flex justify-center items-center px-5"
+       style="background-color: rgba(0,0,0,0.3)" (click)="elementOverview=false">
+    <div class="max-w-screen-md w-full">
+      <form class="w-full h-fit bg-white rounded flex flex-col p-6" (click)="$event.stopPropagation()"
+            (ngSubmit)="addNewElement()">
+        <label for="type" class="poppins-regular">Wählen Sie den Typ aus</label>
+        <select name="type" id="type" class="rounded mt-2 py-2" [(ngModel)]="type">
+          <option selected value="INPUT" name="input">Input</option>
+          <option value="CHECKBOX" name="checkbox">Checkbox</option>
+          <option value="SLIDER" name="range">Range</option>
+          <option value="DATE" name="datum">Datum</option>
+          <option value="EMAIL" name="email">Email</option>
+          <option value="NUMBER" name="zahl">Zahl</option>
+          <option value="TEXT" name="text">Textarea</option>
+        </select>
+        <label for="label" class="poppins-regular mt-5">Label</label>
+        <input class="w-full h-8 mt-2 px-2 py-5 rounded" placeholder="Label" id="label" required [(ngModel)]="label"
+               name="label">
+        <label for="placeholder" class="poppins-regular mt-5">Placeholder</label>
+        <input class="w-full h-8 mt-2 px-2 py-5 rounded" placeholder="Placeholder" id="placeholder" required
+               [(ngModel)]="placeholder" name="placeholder">
+        <div class="flex mt-5">
+          <input type="checkbox" class="w-6 h-6" id="required" [(ngModel)]="required" name="required">
+          <p class="ps-2 poppins-regular">Erforderlich</p>
+        </div>
+        <button class="mt-6 poppins-medium" type="submit">Hinzufügen</button>
+      </form>
+    </div>
+  </div>
 }

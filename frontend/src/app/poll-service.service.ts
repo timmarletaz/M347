@@ -4,6 +4,7 @@ import {BehaviorSubject} from 'rxjs';
 import {Poll, PollDetails} from './Poll';
 import {AlertService} from './alert-service';
 import {Router} from '@angular/router';
+import {ElementRequest} from './elementRequest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class PollServiceService {
 
   private activePoll = new BehaviorSubject<Poll | null>(null);
   private pollDetails = new BehaviorSubject<PollDetails | null>(null);
+  private pollCode = new BehaviorSubject<Poll | null>(null);
   private baseUrl: string = "http://localhost:8080/api/";
   private isSubmitted: WritableSignal<boolean> = signal(false);
 
@@ -58,5 +60,24 @@ export class PollServiceService {
 
   getPollDetails() {
     return this.pollDetails.asObservable();
+  }
+
+  createPoll(title: string, description: string, elements: ElementRequest[]) {
+    let token = localStorage.getItem("token");
+    if(token) {
+      this.httpClient.post<Poll>(this.baseUrl + "polls/create", {title: title, description: description, elements: elements}, {headers: new HttpHeaders({
+          token: token as string
+        })}).subscribe(response => {
+          this.pollCode.next(response);
+          this.alertService.showToast("Erfolgreich erstellt", "success", 2000);
+      }, error => {
+          console.log(error);
+          this.alertService.showToast(error.error.message || "Speichern fehlgeschlagen", "danger", 2000);
+      })
+    }
+  }
+
+  getPollCode() {
+    return this.pollCode.asObservable();
   }
 }
