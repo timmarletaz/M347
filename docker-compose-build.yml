@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        ports:
+            - "4200:4200"
+        networks:
+                  - m347-network
+        depends_on:
+            - backend
+
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pollit
+            - SPRING_DATASOURCE_USERNAME=postgres
+            - SPRING_DATASOURCE_PASSWORD=root
+        networks:
+                  - m347-network
+        depends_on:
+            - db
+
+    db:
+        image: postgres:latest
+        container_name: postgresdb
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=root
+            - POSTGRES_DB=pollit
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - m347-network
+
+volumes:
+    postgres_data:
+
+networks:
+    m347-network:
+        driver: bridge
+
