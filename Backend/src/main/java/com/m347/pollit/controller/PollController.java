@@ -30,11 +30,11 @@ public class PollController {
     }
 
     @PostMapping("create")
-    public String createPoll(@RequestBody CreatePollRequest poll, @RequestHeader String token) {
+    public Poll createPoll(@RequestBody CreatePollRequest poll, @RequestHeader String token) {
         if(this.userService.getTokenState(token)){
             UserEntity user = this.userService.extractUserFromToken(token);
             Poll savedPoll = this.pollService.createPoll(poll, user);
-            return savedPoll.getUuid();
+            return savedPoll;
         }
         throw new CommonException("Ungültiges Token");
     }

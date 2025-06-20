@@ -52,7 +52,7 @@ token: 468aa365-2169-4d68-a921-4e57e9f60b05
 
 ###
 
-GET http://localhost:8080/api/polls/WQBH5851
+GET http://localhost:8080/api/polls/QGNR3541
 
 ###
 
@@ -65,7 +65,7 @@ Content-Type: application/json
 
 ###
 
-GET localhost:8080/api/polls/WQBH5851/admin
+GET localhost:8080/api/polls/QGNR3541/admin
 token: 468aa365-2169-4d68-a921-4e57e9f60b05
 
 ###
