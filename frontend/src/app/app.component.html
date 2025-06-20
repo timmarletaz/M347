@@ -1,9 +1,10 @@
-<header>
-<!--header  -->
-</header>
-<main #main>
+<div class="h-screen w-screen flex flex-col">
+  <header class="w-full flex justify-center h-16 bg-gray-50 shadow z-10" [ngClass]="{'hidden': isAnswering}">
+    <app-navigation></app-navigation>
+  </header>
+<main class="relative w-full bg-gray-100 flex-1 flex justify-center overflow-x-hidden">
+  <div class="w-full max-w-screen-md">
   <router-outlet></router-outlet>
+  </div>
 </main>
-<footer>
-<!--  footer-->
-</footer>
+</div>

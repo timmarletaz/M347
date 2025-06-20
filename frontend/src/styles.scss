@@ -1,9 +1,51 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@plugin "daisyui" {
+  themes: bumblebee;
+}
 
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+button:not(.special-button) {
+  background-color: #d5d5d5;
+  padding: 8px 22px;
+  border-radius: 8px;
+  transition: 0.1s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #bcbcbc;
+  }
+  &:disabled {
+    background-color: #e6e6e6;
+    color: #939393;
+  }
+}
 
 html, body {
   margin: 0;
   height: 100%;
   width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
 }
