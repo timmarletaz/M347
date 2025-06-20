@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -15,5 +17,6 @@ import java.util.Map;
 @Getter
 public class ElementSummary {
     private Element element;
-    private Map<Integer, String> topAnswers = new HashMap<>();
+    private List<SummaryElement> topAnswers = new ArrayList();
 }
+
