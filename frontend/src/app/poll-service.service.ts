@@ -14,7 +14,7 @@ export class PollServiceService {
   private activePoll = new BehaviorSubject<Poll | null>(null);
   private pollDetails = new BehaviorSubject<PollDetails | null>(null);
   private pollCode = new BehaviorSubject<Poll | null>(null);
-  private baseUrl: string = "http://backend:8080/api/";
+  private baseUrl: string = "http://localhost:8080/api/";
   private isSubmitted: WritableSignal<boolean> = signal(false);
 
   constructor(private httpClient: HttpClient, private alertService: AlertService, private router: Router) {}

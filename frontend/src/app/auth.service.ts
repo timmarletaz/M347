@@ -12,7 +12,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient, private alertService: AlertService) { }
 
-  private baseUrl = "http://backend:8080/api/"
+  private baseUrl = "http://localhost:8080/api/"
   private user = new BehaviorSubject<UserModel|null>(null);
   private pollPreview = new BehaviorSubject<PollPreview[] | null>(null);
 
