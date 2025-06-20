@@ -1,0 +1,64 @@
+@if (loading) {
+  <div class="absolute top-0 flex items-center justify-center left-0 h-full w-full z-20"
+       style="background-color: rgba(0,0,0,0.1)">
+    <span class="loading loading-dots loading-xl text-gray-950"></span>
+  </div>
+} @else if (poll) {
+  <div class="w-full min-h-full h-fit flex flex-col pt-0 overflow-y-auto">
+    <div class="flex flex-col w-full rounded-b-xl bg-cyan-700 py-5 text-white">
+      <h1 class="poppins-bold text-3xl text-center overflow-hidden">{{ poll.title }}</h1>
+      <h3 class="poppins-medium text-base text-center">{{ poll.description }}</h3>
+      <h3 class="poppins-regular text-xs text-center mt-2">Erstellt von {{ poll.creator.firstname }} {{ poll.creator.lastname }}</h3>
+    </div>
+
+    <div class="flex flex-col gap-10 mt-8 p-5 pb-12">
+      <form class="flex flex-col gap-8" [formGroup]="form" (ngSubmit)="onSubmit()">
+      @for (element of poll.elements; track element.id) {
+        <div class="flex flex-col gap-2">
+          @switch (element.type) {
+            @case ("INPUT") {
+              <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              <input [placeholder]="element.placeholder" class="poppins-regular rounded-md"
+                     [required]="element.required" [id]="'element-' + element.id" [formControlName]="element.id.toString()">
+            }
+            @case ("EMAIL") {
+              <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              <input [placeholder]="element.placeholder" class="poppins-regular rounded-md" type="email"
+                     [required]="element.required"
+                     [id]="'element-' + element.id" [formControlName]="element.id.toString()">
+            }
+            @case ("CHECKBOX") {
+              <div class="flex gap-3">
+                <input type="checkbox" class="w-6 h-6" style="accent-color: #007595" [placeholder]="element.placeholder"
+                       [required]="element.required" [formControlName]="element.id.toString()" [id]="'element-' + element.id">
+                <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              </div>
+            }
+            @case ("DATE") {
+              <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              <input type="date" class="w-auto rounded-md" style="accent-color: #007595" [id]="'element-' + element.id"
+                     [placeholder]="element.placeholder" [required]="element.required" [formControlName]="element.id.toString()">
+            }
+            @case ("NUMBER") {
+              <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              <input type="number" class="w-auto rounded-md" [placeholder]="element.placeholder"
+                     [required]="element.required" [formControlName]="element.id.toString()" [id]="'element-' + element.id">
+            }
+            @case ("SLIDER") {
+              <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              <input type="range" [id]="'element-' + element.id" class="w-full h-4 accent-blue-500" [formControlName]="element.id.toString()">
+            }
+            @case ("TEXT") {
+              <label [for]="'element-' + element.id" class="text-black poppins-regular">{{ element.label }}{{ isElementRequired(element) }}</label>
+              <textarea [id]="'element-' + element.id" class="w-full rounded-md" [placeholder]="element.placeholder"
+                        [required]="element.required" [formControlName]="element.id.toString()"></textarea>
+            }
+          }
+        </div>
+      }
+        <button class="w-full self-center py-3 poppins-medium mt-12" type="submit" [disabled]="checkForm()">Senden</button>
+
+      </form>
+    </div>
+  </div>
+}

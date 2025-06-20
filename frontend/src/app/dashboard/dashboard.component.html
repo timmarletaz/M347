@@ -1,0 +1,42 @@
+@if (loading) {
+  <app-loader></app-loader>
+} @else if (user) {
+  <div class="w-full h-full flex flex-col py-8 overflow-y-auto">
+    <h1 class="mb-5 text-2xl poppins-bold text-center">Guten Tag {{ user.firstname }}</h1>
+    <button class="special-button mb-4 self-end mr-5 px-4 py-2 bg-indigo-500 rounded-md text-white poppins-regular cursor-pointer" (click)="createNewPoll()">Neue Umfrage</button>
+    @if (pollsLoading) {
+      <app-loader></app-loader>
+    } @else if (pollPreviews) {
+      <div class="w-full h-fit flex flex-col gap-5 px-5">
+        @for (pollPreview of pollPreviews; track pollPreview.uuid) {
+          <div class="h-fit w-full flex flex-col justify-center bg-white rounded-xl drop-shadow px-4 py-3 min-h-32">
+            <h1 class="text-2xl poppins-bold">{{ pollPreview.title }}</h1>
+            <h3 class="poppins-regular text-base break-words mt-2">{{ pollPreview.description }}</h3>
+            <p class="poppins-medium mt-2">Code: {{ pollPreview.uuid }}</p>
+            <button class="w-fit self-end poppins-regular mt-3" (click)="loadPollDetails(pollPreview)">Details</button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
+@if(creatingNewPoll){
+  <div class="h-full w-full absolute bg-gray-50 top-0 p-4 flex flex-col">
+    <button class="special-button self-end cursor-pointer" (click)="abortNewPoll()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-8">
+        <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+      </svg>
+    </button>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input class="w-full h-8 mt-4 px-2 py-5 rounded" placeholder="Titel">
+      <input class="w-full h-8 mt-4 px-2 py-5 rounded" placeholder="Beschreibung">
+      <div class="flex flex-col w-full mt-3" #previewDiv>
+        <button class="poppins-regular" (click)="elementOverview=true">Element Hinzufügen</button>
+      </div>
+    </form>
+  </div>
+}
+@if(elementOverview) {
+  <div class="w-full h-1/2 mx-3 bg-red-300 absolute top-50 left-50" style="transform: translate(-50%, -50%)"></div>
+}
