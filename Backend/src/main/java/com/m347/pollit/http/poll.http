@@ -1,6 +1,6 @@
 POST http://localhost:8080/api/polls/create
 Content-Type: application/json
-token: 3d53d096-5195-4087-93eb-6f2062e234d6
+token: 468aa365-2169-4d68-a921-4e57e9f60b05
 
 {
   "description": "Test",
@@ -22,13 +22,28 @@ token: 3d53d096-5195-4087-93eb-6f2062e234d6
 
 ###
 
-GET http://localhost:8080/api/polls/QBLE1688
+GET http://localhost:8080/api/polls/SZPJ9354
 
 ###
 
-POST http://localhost:8080/api/polls/QBLE1688/submit
+POST http://localhost:8080/api/polls/SZPJ9354/submit
 Content-Type: application/json
 
 {
   "values": ["", "tim@tim.com"]
 }
+
+###
+
+GET localhost:8080/api/polls/SZPJ9354/admin
+token: 468aa365-2169-4d68-a921-4e57e9f60b05
+
+###
+
+GET localhost:8080/api/polls/SZPJ9354/all/2
+token: 468aa365-2169-4d68-a921-4e57e9f60b05
+
+###
+
+GET localhost:8080/api/user/polls/all
+token: 468aa365-2169-4d68-a921-4e57e9f60b05

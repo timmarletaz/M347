@@ -6,12 +6,14 @@ import com.m347.pollit.entities.Element;
 import com.m347.pollit.entities.Poll;
 import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
+import com.m347.pollit.repositories.ElementRepository;
 import com.m347.pollit.repositories.PollRepository;
 import com.m347.pollit.requests.AnswerRequest;
 import com.m347.pollit.requests.CreatePollRequest;
 import com.m347.pollit.requests.ElementRequest;
 import com.m347.pollit.responses.AdminResponse;
 import com.m347.pollit.responses.ElementSummary;
+import com.m347.pollit.responses.SummaryElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class PollService {
 
     @Autowired
     private PollRepository pollRepository;
+
+    @Autowired
+    private ElementRepository elementRepository;
 
     public Poll createPoll(CreatePollRequest createPollRequest, UserEntity owner) {
         Poll poll = new Poll();
@@ -50,51 +55,64 @@ public class PollService {
     }
 
     public void evaluateAnswers(AnswerRequest answerRequest, Poll poll) {
-        //TODO, bei jeder Antwort checken, ob sie bereits existiert (nicht case sensitive) und dann count erhöhen
         List<Element> elements = poll.getElements();
+
         if (answerRequest.getValues().size() != elements.size()) {
             throw new CommonException("Bitte alle Fragen beantworten");
         }
+
         for (int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
             String answer = answerRequest.getValues().get(i);
-            if ((answer == null || answer.trim().isEmpty())) {
+
+            if (answer == null || answer.trim().isEmpty()) {
                 if (element.isRequired()) {
                     throw new CommonException("Bitte alle Fragen beantworten");
                 }
-            } else if (element.getType() == ElementType.DATE) {
-                try {
-                    LocalDateTime.parse(answer);
-                    Answer newAnswer = new Answer(element, answer);
-                    element.addAnswer(newAnswer);
-                } catch (DateTimeParseException e) {
-                    e.printStackTrace();
-                    throw new CommonException("Bitte gültiges Datum eingeben");
-                }
-            } else if (element.getType() == ElementType.EMAIL) {
-                if (answer.matches("^[A-Za-z0-9+_.-]{2,}@[A-Za-z0-9.-]{2,}\\.[a-z]{2,}$")) {
-                    this.addAnswer(element,answer);
-                } else {
-                    throw new CommonException("Ungültige Email-Adresse");
-                }
-            } else if (element.getType() == ElementType.CHECKBOX){
-                if(answer.contains("checked") || answer.contains("unchecked")) {
-                    Answer newAnswer = new Answer(element, answer);
-                    element.addAnswer(newAnswer);
-                } else {
-                    throw new CommonException("Bitte alle Fragen beantworten");
-                }
-            } else if (element.getType() == ElementType.SLIDER || element.getType() == ElementType.NUMBER) {
-                try {
-                    Integer.parseInt(answer);
-                    Answer newAnswer = new Answer(element, answer);
-                    element.addAnswer(newAnswer);
-                } catch (NumberFormatException e) {
-                    throw new CommonException("Bitte alle Fragen beantworten");
-                }
-            } else {
-                Answer newAnswer = new Answer(element, answer);
-                element.addAnswer(newAnswer);
+                continue;
+            }
+
+            ElementType type = element.getType();
+
+            switch (type) {
+                case DATE:
+                    try {
+                        LocalDateTime.parse(answer);
+                        element.addAnswer(new Answer(element, answer));
+                    } catch (DateTimeParseException e) {
+                        throw new CommonException("Bitte gültiges Datum eingeben");
+                    }
+                    break;
+
+                case EMAIL:
+                    if (answer.matches("^[A-Za-z0-9+_.-]{2,}@[A-Za-z0-9.-]{2,}\\.[a-z]{2,}$")) {
+                        addAnswer(element, answer);
+                    } else {
+                        throw new CommonException("Ungültige Email-Adresse");
+                    }
+                    break;
+
+                case CHECKBOX:
+                    if (answer.contains("checked") || answer.contains("unchecked")) {
+                        element.addAnswer(new Answer(element, answer));
+                    } else {
+                        throw new CommonException("Bitte alle Fragen beantworten");
+                    }
+                    break;
+
+                case SLIDER:
+                case NUMBER:
+                    try {
+                        Integer.parseInt(answer);
+                        element.addAnswer(new Answer(element, answer));
+                    } catch (NumberFormatException e) {
+                        throw new CommonException("Bitte eine gültige Zahl eingeben");
+                    }
+                    break;
+
+                default:
+                    addAnswer(element, answer);
+                    break;
             }
         }
         this.pollRepository.save(poll);
@@ -121,17 +139,37 @@ public class PollService {
         return this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Umfrage wurde nicht gefunden"));
     }
 
-    public void addAnswer(Element element, String answer) {
-        //TODO überprüfen, ob es ein Match gibt
-        Answer newAnswer = new Answer(element, answer);
-        element.addAnswer(newAnswer);
+    public Element addAnswer(Element element, String answer) {
+        for (Answer existingAnswer : element.getAnswers()) {
+            if (existingAnswer.getValue().equalsIgnoreCase(answer)) {
+                existingAnswer.increaseCount();
+                return element;
+            }
+        }
+
+        element.addAnswer(new Answer(element, answer));
+        return element;
     }
 
     public AdminResponse generateSummary(Poll poll) {
         List<ElementSummary> elementSummaries = new ArrayList<>();
-        for(Element element : poll.getElements()) {
-            //TODO Smarter machen
+
+        for (Element element : poll.getElements()) {
+            List<SummaryElement> topAnswers = element.getAnswers().stream()
+                    .sorted(Comparator.comparingInt(Answer::getCount).reversed())
+                    .limit(5)
+                    .map(answer -> new SummaryElement(answer, answer.getCount()))
+                    .collect(Collectors.toList());
+
+            ElementSummary summary = new ElementSummary(element, topAnswers);
+            elementSummaries.add(summary);
         }
-        return null;
+
+        return new AdminResponse(elementSummaries);
+    }
+
+    public List<Answer> getEveryAnswerOfElement(int id) {
+        Element element = this.elementRepository.findById(id).orElseThrow(() -> new CommonException("Element nicht gefunden"));
+        return element.getAnswers().stream().sorted(Comparator.comparingInt(Answer::getCount).reversed()).collect(Collectors.toList());
     }
 }

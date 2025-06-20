@@ -1,5 +1,6 @@
 package com.m347.pollit.controller;
 
+import com.m347.pollit.entities.Answer;
 import com.m347.pollit.entities.Poll;
 import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
@@ -10,6 +11,8 @@ import com.m347.pollit.services.PollService;
 import com.m347.pollit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/polls")
@@ -51,6 +54,19 @@ public class PollController {
                 throw new CommonException("Nicht berechtigt diese Aktion auszuführen");
             }
             return this.pollService.generateSummary(poll);
+        }
+        throw new CommonException("Ungültiges Token");
+    }
+
+    @GetMapping("{id}/all/{elementId}")
+    public List<Answer> getAllAnswersForElement(@PathVariable int elementId, @PathVariable String id, @RequestHeader String token) {
+        if(this.userService.getTokenState(token)) {
+            UserEntity user = this.userService.extractUserFromToken(token);
+            Poll poll = this.pollService.getPollByUuid(id);
+            if (!poll.getCreator().equals(user)) {
+                throw new CommonException("Nicht berechtigt diese Aktion auszuführen");
+            }
+            return this.pollService.getEveryAnswerOfElement(elementId);
         }
         throw new CommonException("Ungültiges Token");
     }
