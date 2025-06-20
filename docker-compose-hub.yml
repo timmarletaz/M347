@@ -15,9 +15,9 @@ services:
         ports:
             - "8080:8080"
         environment:
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pollit
-            - SPRING_DATASOURCE_USERNAME=postgres
-            - SPRING_DATASOURCE_PASSWORD=root
+        - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+        - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+        - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
         networks:
             - m347-network
         depends_on:

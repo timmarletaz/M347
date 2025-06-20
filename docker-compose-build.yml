@@ -33,9 +33,9 @@ services:
         ports:
             - "5432:5432"
         environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=root
-            - POSTGRES_DB=pollit
+            - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+            - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+            - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
         volumes:
             - postgres_data:/var/lib/postgresql/data
         networks:
