@@ -43,9 +43,9 @@ public class UserService {
         }
     }
 
-    public String generateToken(UserEntity owner) {
+    public TokenEntity generateToken(UserEntity owner) {
         TokenEntity tokenEntity = new TokenEntity(UUID.randomUUID().toString(), owner);
-        return this.tokenRepository.save(tokenEntity).getToken();
+        return this.tokenRepository.save(tokenEntity);
     }
 
     public UserEntity extractUserFromToken(String token) {

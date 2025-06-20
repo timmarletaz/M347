@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -41,6 +42,7 @@ public class PollService {
         for (ElementRequest elementRequest : createPollRequest.getElements()) {
             Element element = new Element(elementRequest.getLabel(), elementRequest.getType(), elementRequest.getPlaceholder());
             poll.addElement(element);
+            element.setRequired(elementRequest.isRequired());
             element.setPoll(poll);
         }
         poll.setDescription(createPollRequest.getDescription());
@@ -77,8 +79,8 @@ public class PollService {
             switch (type) {
                 case DATE:
                     try {
-                        LocalDateTime.parse(answer);
-                        element.addAnswer(new Answer(element, answer));
+                        LocalDate.parse(answer);
+                        addAnswer(element, answer);
                     } catch (DateTimeParseException e) {
                         throw new CommonException("Bitte gültiges Datum eingeben");
                     }
@@ -94,7 +96,7 @@ public class PollService {
 
                 case CHECKBOX:
                     if (answer.contains("checked") || answer.contains("unchecked")) {
-                        element.addAnswer(new Answer(element, answer));
+                        addAnswer(element, answer);
                     } else {
                         throw new CommonException("Bitte alle Fragen beantworten");
                     }
@@ -104,7 +106,7 @@ public class PollService {
                 case NUMBER:
                     try {
                         Integer.parseInt(answer);
-                        element.addAnswer(new Answer(element, answer));
+                        addAnswer(element, answer);
                     } catch (NumberFormatException e) {
                         throw new CommonException("Bitte eine gültige Zahl eingeben");
                     }
@@ -157,7 +159,7 @@ public class PollService {
         for (Element element : poll.getElements()) {
             List<SummaryElement> topAnswers = element.getAnswers().stream()
                     .sorted(Comparator.comparingInt(Answer::getCount).reversed())
-                    .limit(5)
+                    .limit(10)
                     .map(answer -> new SummaryElement(answer, answer.getCount()))
                     .collect(Collectors.toList());
 
