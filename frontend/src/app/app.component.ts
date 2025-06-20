@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {NavigationComponent} from './navigation/navigation.component';
-import {NgClass, NgStyle} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {filter} from 'rxjs';
-import {LoaderComponent} from './loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavigationComponent, NgClass, LoaderComponent],
+  imports: [RouterOutlet, NavigationComponent, NgClass],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
