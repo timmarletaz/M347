@@ -1,0 +1,26 @@
+input:not(input[type="checkbox"]), textarea {
+  margin: 1px;
+  padding: 8px 6px;
+  border: 1px solid gray;
+  &:focus {
+    outline: 1px solid #656565;
+  }
+}
+
+textarea {
+  min-height: 50px;
+  max-height: 300px;
+}
+
+
+input[type="range"] {
+  color: #007595;
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+* {
+  overflow-x: hidden;
+}

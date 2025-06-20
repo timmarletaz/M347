@@ -1,0 +1,14 @@
+@if (loading) {
+  <app-loader></app-loader>
+} @else if (pollDetail) {
+  <div class="w-full h-full overflow-y-auto flex flex-col gap-7 py-4">
+    @for (element of pollDetail.elements; track element.element.id) {
+      <p class="text-xl pl-4 poppins-medium">{{ element.element.label }} ({{ element.element.placeholder }})</p>
+      <div class="flex flex-col gap-2">
+        @for (answer of element.topAnswers; track answer.answer) {
+          <p class="ps-12"><b>{{answer.answer.count}}</b> {{ answer.answer.value }}</p>
+        }
+      </div>
+    }
+  </div>
+}
