@@ -1,6 +1,13 @@
 version: "3.8"
 
 services:
+    devcontainer:
+        image: mcr.microsoft.com/devcontainers/javascript-node:20
+        volumes:
+            - .:/workspace:cached
+        networks:
+            - m347-network
+        command: sleep infinity
     frontend:
         image: timmarletaz/frontend:latest
         ports:

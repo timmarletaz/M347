@@ -1,21 +1,21 @@
 {
   "name": "Fullstack Devcontainer",
-  "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "frontend",
-  "workspaceFolder": "/app",
+  "dockerComposeFile": ["../docker-compose-hub.yml"],
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
   "extensions": [
-      "esbenp.prettier-vscode",
-      "dbaeumer.vscode-eslint",
-      "ckolkman.vscode-postgres" ,
-      "angular.ng-template",
-      "redhat.java",
-      "vscjava.vscode-java-pack",
-      "ms-azuretools.vscode-docker"
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ckolkman.vscode-postgres",
+    "angular.ng-template",
+    "redhat.java",
+    "vscjava.vscode-java-pack",
+    "ms-azuretools.vscode-docker"
   ],
   "forwardPorts": [4200, 8080],
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "npm install -g @angular/cli && cd frontend && npm install",
   "remoteUser": "node"
 }
