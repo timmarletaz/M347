@@ -4,26 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe5711ef-acbe-438c-86cf-3521c8f51061" name="Changes" comment=" [UPDATE]: Added Three Extensions for devcontainer.json">
-      <change beforePath="$PROJECT_DIR$/.devcontainer/devcontainer.json" beforeDir="false" afterPath="$PROJECT_DIR$/.devcontainer/devcontainer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="a4a56082-1ed6-46a4-9603-daa9680e46b2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Backend/.github/workflows/maven-tests.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/TimeConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-hub.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-hub.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/PollitApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/PollitApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="TypeScript File" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,7 +29,7 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;timmarletaz&quot;
+    &quot;assignee&quot;: &quot;RamonHufschmid-ops&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
@@ -40,63 +38,31 @@
     &quot;accountId&quot;: &quot;eed0ede4-3ab5-4a1f-95d8-137cfcd6be22&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="2y2h8d1vyE3cxwcfTdUzMPCqDx7" />
+  <component name="ProjectId" id="31B9HOFZO238FgBQEsYAimVxiUp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Berufsschule_Ramon/M347/M347",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "ts.external.directory.path": "C:\\Users\\Berufsschule_Ramon\\M347\\M347\\frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
-    ]
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Tim Berufsschule\Documents\M347 - Projekt\Backend" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="M347" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="M347" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -105,65 +71,19 @@
       </set>
     </attachedChunks>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fe5711ef-acbe-438c-86cf-3521c8f51061" name="Changes" comment="" />
-      <created>1749038418360</created>
+      <changelist id="a4a56082-1ed6-46a4-9603-daa9680e46b2" name="Changes" comment="" />
+      <created>1754986512028</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1749038418360</updated>
-      <workItem from="1749038419607" duration="1079000" />
-      <workItem from="1749641583587" duration="2014000" />
-      <workItem from="1749644431951" duration="5375000" />
-      <workItem from="1750244429888" duration="4627000" />
-      <workItem from="1750249371276" duration="6090000" />
-      <workItem from="1750435723781" duration="3637000" />
-      <workItem from="1750535574783" duration="5098000" />
+      <updated>1754986512028</updated>
+      <workItem from="1754986515988" duration="2502000" />
+      <workItem from="1755583832130" duration="1362000" />
     </task>
-    <task id="LOCAL-00001" summary="Backend initialization">
-      <option name="closed" value="true" />
-      <created>1749041157512</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1749041157512</updated>
-    </task>
-    <task id="LOCAL-00002" summary="  [NEW]: Login and Register and initial Homepage">
-      <option name="closed" value="true" />
-      <created>1749651073713</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1749651073713</updated>
-    </task>
-    <task id="LOCAL-00003" summary="  [NEW]: Adding Questions to a Form">
-      <option name="closed" value="true" />
-      <created>1750255966849</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1750255966849</updated>
-    </task>
-    <task id="LOCAL-00004" summary=" [UPDATE]: Added Three Extensions for devcontainer.json">
-      <option name="closed" value="true" />
-      <created>1750535220445</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1750535220450</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Backend initialization" />
-    <MESSAGE value="  [NEW]: Login and Register and initial Homepage" />
-    <MESSAGE value="  [NEW]: Adding Questions to a Form" />
-    <MESSAGE value=" [UPDATE]: Added Three Extensions for devcontainer.json" />
-    <option name="LAST_COMMIT_MESSAGE" value=" [UPDATE]: Added Three Extensions for devcontainer.json" />
   </component>
 </project>

@@ -9,22 +9,35 @@ import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.responses.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.time.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private TokenRepository tokenRepository;
+    private final UserRepository userRepository;
+
+
+    private final TokenRepository tokenRepository;
+
+    private final Clock clock;
+
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    public UserService(UserRepository userRepository, TokenRepository tokenRepository, Clock clock) {
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+        this.clock = clock;
+    }
 
     public UserEntity register(RegisterRequest registerRequest) {
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
@@ -54,11 +67,9 @@ public class UserService {
     }
 
     public boolean getTokenState(String token) {
-        TokenEntity tokenEntity = this.tokenRepository.findByToken(token).orElse(null);
-        if(tokenEntity != null) {
-            return tokenEntity.getExpires().isAfter(LocalDateTime.now());
-        }
-        return false;
+            return tokenRepository.findByToken(token)
+                    .map(t -> t.getExpires().isAfter(LocalDateTime.now(clock)))
+                    .orElse(false);
     }
 
 }
