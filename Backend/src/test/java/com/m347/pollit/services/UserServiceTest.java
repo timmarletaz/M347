@@ -164,6 +164,7 @@ class UserServiceTest {
         assertEquals("Moritz", updatedUser.getFirstname());
         assertEquals("Meier", updatedUser.getLastname());
         assertEquals("newPw", updatedUser.getPassword());
+        assertEquals("test@gmail.com", updatedUser.getEmail());
     }
 
     @Test
@@ -176,6 +177,8 @@ class UserServiceTest {
 
         assertEquals("User wurde nicht gefunden", exception.getMessage());
     }
+
+
 
     @Test
     void deleteUserSuccess() {
