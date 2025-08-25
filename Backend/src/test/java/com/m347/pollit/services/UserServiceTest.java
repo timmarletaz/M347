@@ -33,6 +33,7 @@ class UserServiceTest {
     @Mock
     private TokenRepository tokenRepository;
 
+    @InjectMocks
     private UserService userService;
 
     private final UserEntity user = new UserEntity("Max", "Müller", "test@mail.com", "pw");
