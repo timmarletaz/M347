@@ -61,7 +61,6 @@ class PollServiceTest {
         assertThrows(CommonException.class, () -> this.pollService.createPoll(createPollRequest, owner));
     }
 
-
     @Test
     void evaluateAnswers() {
         Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), null);
@@ -71,6 +70,19 @@ class PollServiceTest {
         verify(pollRepository, times(1)).save(poll);
     }
 
+    @Test
+    void evaluateAnswersRequiredError() {
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element(1L, "LABEL", ElementType.DATE, "PLACEHOLDER", false, null, null), new Element(2L, "LABEL", ElementType.DATE, "PLACEHOLDER", true, null, null)));
+        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("asd@asd.com"));
+        assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
+    }
+
+    @Test
+    void evaluateAnswersEmptyListError() {
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element(1L, "LABEL", ElementType.DATE, "PLACEHOLDER", true, null, null)));
+        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList());
+        assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
+    }
 
     @Test
     void evaluateDateError() {
