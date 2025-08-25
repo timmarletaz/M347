@@ -8,16 +8,12 @@ import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.requests.UpdateUserRequest;
-import com.m347.pollit.responses.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import java.time.*;
+import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
