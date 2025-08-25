@@ -81,10 +81,11 @@ public class UserService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException("User wurde nicht gefunden"));
 
-        // BUG: Absichtlich Email nicht überschreiben
+        // BUG: Absichtlich Passwort nicht überschreiben
         user.setFirstname(request.getFirstName());
         user.setLastname(request.getLastName());
-        // user.setEmail(request.getEmail());
+//        user.setPassword(request.getPassword());
+
 
         return userRepository.save(user);
     }

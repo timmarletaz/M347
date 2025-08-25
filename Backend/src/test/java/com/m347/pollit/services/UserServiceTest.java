@@ -163,7 +163,7 @@ class UserServiceTest {
 
         assertEquals("Moritz", updatedUser.getFirstname());
         assertEquals("Meier", updatedUser.getLastname());
-        assertEquals("test@gmail.com", updatedUser.getEmail());
+        assertEquals("newPw", updatedUser.getPassword());
     }
 
     @Test
