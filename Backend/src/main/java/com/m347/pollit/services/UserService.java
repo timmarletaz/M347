@@ -31,7 +31,6 @@ public class UserService {
 
     private final Clock clock;
 
-
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -81,10 +80,28 @@ public class UserService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException("User wurde nicht gefunden"));
 
-        // BUG: Absichtlich Passwort nicht überschreiben
+        if(!request.getEmail().matches("^[A-Za-z0-9+_.-]{2,}@[A-Za-z0-9.-]{2,}\\.[a-z]{2,}$")){
+            throw new CommonException("E-Mail Format ungültig");
+        }
+
+        if(request.getFirstName() == null || request.getFirstName().isEmpty()){
+            throw new CommonException("Vorname darf nicht leer sein");
+        }
+
+        if(request.getLastName() == null || request.getLastName().isEmpty()){
+            throw new CommonException("Nachname darf nicht leer sein");
+        }
+
+        if(encoder.matches(user.getPassword(), request.getPassword())) {
+            throw new CommonException("Neues Passwort darf nicht gleich wie das alte sein");
+        }
+
+
         user.setFirstname(request.getFirstName());
         user.setLastname(request.getLastName());
-//        user.setPassword(request.getPassword());
+        // BUG: Absichtlich Passwort nicht überschreiben
+        user.setPassword(request.getPassword());
+        user.setEmail(request.getEmail());
 
 
         return userRepository.save(user);
@@ -94,8 +111,8 @@ public class UserService {
         Optional<UserEntity> userOpt = userRepository.findById(userId);
         if (userOpt.isPresent()) {
             // BUG: Anstatt delete(user) wird deleteAll() aufgerufen
-            userRepository.deleteAll();
-//            userRepository.delete(userOpt.get());
+            // userRepository.deleteAll();
+            userRepository.delete(userOpt.get());
         } else {
             throw new CommonException("User wurde nicht gefunden");
         }

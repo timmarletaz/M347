@@ -157,7 +157,7 @@ class UserServiceTest {
         when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
         when(userRepository.save(any(UserEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw");
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw", "test@gmail.com");
 
         UserEntity updatedUser = userService.updateUserData(1, updateRequest);
 
@@ -169,7 +169,7 @@ class UserServiceTest {
     @Test
     void updateUserDataFailNotFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
-        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw");
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw", null);
 
         CommonException exception = assertThrows(CommonException.class,
                 () -> userService.updateUserData(1, updateRequest));
