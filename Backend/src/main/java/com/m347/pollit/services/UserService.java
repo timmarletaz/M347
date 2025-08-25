@@ -92,7 +92,7 @@ public class UserService {
             throw new CommonException("Nachname darf nicht leer sein");
         }
 
-        if(encoder.matches(user.getPassword(), request.getPassword())) {
+        if(request.getPassword().matches(user.getPassword())) {
             throw new CommonException("Neues Passwort darf nicht gleich wie das alte sein");
         }
 

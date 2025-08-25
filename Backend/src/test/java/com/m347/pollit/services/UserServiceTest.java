@@ -178,7 +178,61 @@ class UserServiceTest {
         assertEquals("User wurde nicht gefunden", exception.getMessage());
     }
 
+    @Test
+    void updateUserDataFailInvalidEmail() {
+        UserEntity existingUser = new UserEntity("Max", "Müller", "test@gmail.com", "pw");
 
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw", "bananemail.test");
+
+        CommonException exception = assertThrows(CommonException.class,
+                () -> userService.updateUserData(1, updateRequest));
+
+        assertEquals("E-Mail Format ungültig", exception.getMessage());
+    }
+
+    @Test
+    void updateUserDataFailInvalidFirstname() {
+        UserEntity existingUser = new UserEntity("Max", "Müller", "test@gmail.com", "pw");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+
+        UpdateUserRequest updateRequest = new UpdateUserRequest("", "Meier", "newPw", "new@mail.com");
+
+        CommonException exception = assertThrows(CommonException.class,
+                () -> userService.updateUserData(1, updateRequest));
+
+        assertEquals("Vorname darf nicht leer sein", exception.getMessage());
+    }
+
+    @Test
+    void updateUserDataFailInvalidLastname() {
+        UserEntity existingUser = new UserEntity("Max", "Müller", "test@gmail.com", "pw");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "", "newPw", "new@mail.com");
+
+        CommonException exception = assertThrows(CommonException.class,
+                () -> userService.updateUserData(1, updateRequest));
+
+        assertEquals("Nachname darf nicht leer sein", exception.getMessage());
+    }
+
+    @Test
+    void updateUserDataFailInvalidPassword() {
+        UserEntity existingUser = new UserEntity("Max", "Müller", "test@gmail.com", "pw");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "pw", "new@mail.com");
+
+        CommonException exception = assertThrows(CommonException.class,
+                () -> userService.updateUserData(1, updateRequest));
+
+        assertEquals("Neues Passwort darf nicht gleich wie das alte sein", exception.getMessage());
+    }
 
     @Test
     void deleteUserSuccess() {
