@@ -7,6 +7,7 @@ import com.m347.pollit.repositories.TokenRepository;
 import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
+import com.m347.pollit.requests.UpdateUserRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,6 +43,7 @@ class UserServiceTest {
         userService = new UserService(userRepository, tokenRepository, fixedClock);
     }
 
+//    Time Freezing tests
     @Test
     void tokenValidWhenExpiresInFuture() {
         TokenEntity token = new TokenEntity("abc", user);
@@ -149,6 +151,50 @@ class UserServiceTest {
 //    TDD
     @Test
     void updateUserDataSuccess() {
-        // TODO
+        UserEntity existingUser = new UserEntity("Max", "Müller", "test@gmail.com", "pw");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(any(UserEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw");
+
+        UserEntity updatedUser = userService.updateUserData(1, updateRequest);
+
+        assertEquals("Moritz", updatedUser.getFirstname());
+        assertEquals("Meier", updatedUser.getLastname());
+        assertEquals("new@mail.com", updatedUser.getEmail());
+    }
+
+    @Test
+    void updateUserDataFailNotFound() {
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+        UpdateUserRequest updateRequest = new UpdateUserRequest("Moritz", "Meier", "newPw");
+
+        CommonException exception = assertThrows(CommonException.class,
+                () -> userService.updateUserData(1, updateRequest));
+
+        assertEquals("User wurde nicht gefunden", exception.getMessage());
+    }
+
+    @Test
+    void deleteUserSuccess() {
+        UserEntity existingUser = new UserEntity("Max", "Müller", "test@mail.com", "pw");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+
+        userService.deleteUser(existingUser);
+
+        verify(userRepository, times(1)).delete(existingUser);
+    }
+
+    @Test
+    void deleteUserFailNotFound() {
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        CommonException exception = assertThrows(CommonException.class,
+                () -> userService.deleteUser(1));
+
+        assertEquals("User wurde nicht gefunden", exception.getMessage());
+        verify(userRepository, never()).delete(any());
     }
 }
