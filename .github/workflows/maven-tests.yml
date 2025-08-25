@@ -9,7 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./Backend
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -22,5 +24,4 @@ jobs:
           cache: maven
 
       - name: Run Maven Tests
-        working-directory: ./Backend
         run: mvn clean verify
