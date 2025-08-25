@@ -94,6 +94,7 @@ public class UserService {
         if (userOpt.isPresent()) {
             // BUG: Anstatt delete(user) wird deleteAll() aufgerufen
             userRepository.deleteAll();
+//            userRepository.delete(userOpt.get());
         } else {
             throw new CommonException("User wurde nicht gefunden");
         }
