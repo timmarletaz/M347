@@ -105,7 +105,7 @@ public class PollService {
                 case SLIDER:
                 case NUMBER:
                     try {
-                        Integer.parseInt(answer);
+                        Float.parseFloat(answer);
                         addAnswer(element, answer);
                     } catch (NumberFormatException e) {
                         throw new CommonException("Bitte eine gültige Zahl eingeben");
