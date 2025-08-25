@@ -21,8 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -36,10 +35,12 @@ class PollServiceTest {
     @InjectMocks
     private PollService pollService;
 
+    CreatePollRequest createPollRequest = new CreatePollRequest("Test", "beschreibung", new ArrayList<>());
+    UserEntity owner = new UserEntity();
+
 
     @Test
     void createPoll() {
-        // Poll erstellen mit gültigen Werten
         CreatePollRequest createPollRequest = new CreatePollRequest("Test", "beschreibung", Arrays.asList(new ElementRequest("LABEL", "PLACEHOLDER", ElementType.EMAIL, true)));
         UserEntity owner = new UserEntity();
         when(pollRepository.findByUuid(anyString())).thenReturn(Optional.empty());
@@ -49,13 +50,12 @@ class PollServiceTest {
     }
 
     @Test
-    void createPollErrors() {
-        // Ohne Elemente
-        CreatePollRequest createPollRequest = new CreatePollRequest("Test", "beschreibung", new ArrayList<>());
-        UserEntity owner = new UserEntity();
+    void createPollWithoutElementError() {
         assertThrows(CommonException.class, () -> this.pollService.createPoll(createPollRequest, owner));
+    }
 
-        // Ohne Titel
+    @Test
+    void createPollWithoutTitleError() {
         createPollRequest.setTitle("");
         createPollRequest.setElements(Arrays.asList(new ElementRequest("LABEL", "PLACEHOLDER", ElementType.EMAIL, true)));
         assertThrows(CommonException.class, () -> this.pollService.createPoll(createPollRequest, owner));
@@ -73,12 +73,36 @@ class PollServiceTest {
 
 
     @Test
-    void evaluateAnswersErrors() {
-        // Ungültiges Datum testen
+    void evaluateDateError() {
         Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element("LABEL", ElementType.DATE, "PLACEHOLDER")));
         AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("asasd"));
         assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
-
-        //Ungültige E-
     }
+
+    @Test
+    void evaluateEmailError() {
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element("LABEL", ElementType.EMAIL, "PLACEHOLDER")));
+        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("a@a.a"));
+        assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
+    }
+
+    @Test
+    void evaluateCheckboxError() {
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element("LABEL", ElementType.CHECKBOX, "PLACEHOLDER")));
+        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("1"));
+        assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
+    }
+
+    @Test
+    void evaluateNumberError() {
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element("LABEL", ElementType.NUMBER, "PLACEHOLDER")));
+        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("1a"));
+        assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
+    }
+
+    @Test
+    void testIdGenerating() {
+        assertTrue(this.pollService.generateUniquePollId().matches("[A-Z0-9]{8}"));
+    }
+
 }
