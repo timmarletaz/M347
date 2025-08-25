@@ -22,4 +22,5 @@ jobs:
           cache: maven
 
       - name: Run Maven Tests
+        working-directory: ./Backend
         run: mvn clean verify
