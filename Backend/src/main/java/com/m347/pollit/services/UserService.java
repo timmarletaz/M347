@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -83,8 +84,20 @@ public class UserService {
         // BUG: Absichtlich Email nicht überschreiben
         user.setFirstname(request.getFirstName());
         user.setLastname(request.getLastName());
-        // user.setEmail(request.getEmail()); // BUG: fehlt
+        // user.setEmail(request.getEmail());
 
         return userRepository.save(user);
     }
+
+    public void deleteUser(int userId) {
+        Optional<UserEntity> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            // BUG: Anstatt delete(user) wird deleteAll() aufgerufen
+            userRepository.deleteAll();
+        } else {
+            throw new CommonException("User wurde nicht gefunden");
+        }
+    }
+
+
 }

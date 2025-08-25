@@ -182,7 +182,7 @@ class UserServiceTest {
 
         when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
 
-        userService.deleteUser(existingUser);
+        userService.deleteUser(1);
 
         verify(userRepository, times(1)).delete(existingUser);
     }
