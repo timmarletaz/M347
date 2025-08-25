@@ -75,7 +75,7 @@ class PollServiceTest {
     @Test
     void evaluateDateError() {
         Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element("LABEL", ElementType.DATE, "PLACEHOLDER")));
-        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("asasd"));
+        AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("12-13-2029"));
         assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
     }
 
