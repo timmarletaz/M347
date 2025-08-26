@@ -8,11 +8,8 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class PollitApplicationTests {
 
-
 	@Test
 	void contextLoads() {
 	}
-
-
 
 }
