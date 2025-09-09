@@ -14,6 +14,7 @@ import com.m347.pollit.requests.ElementRequest;
 import com.m347.pollit.responses.AdminResponse;
 import com.m347.pollit.responses.ElementSummary;
 import com.m347.pollit.responses.SummaryElement;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class PollService {
     @Autowired
     private ElementRepository elementRepository;
 
+    @Transactional
     public Poll createPoll(CreatePollRequest createPollRequest, UserEntity owner) {
         Poll poll = new Poll();
         if (createPollRequest.getTitle().trim().isEmpty() || createPollRequest.getElements().isEmpty()) {
@@ -53,10 +55,12 @@ public class PollService {
         return poll;
     }
 
+    @Transactional
     public Poll getPublicPoll(String uuid) {
         return this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Umfrage wurde nicht gefunden"));
     }
 
+    @Transactional
     public void evaluateAnswers(AnswerRequest answerRequest, Poll poll) {
         List<Element> elements = poll.getElements();
 
@@ -171,6 +175,7 @@ public class PollService {
         return new AdminResponse(elementSummaries);
     }
 
+    @Transactional
     public List<Answer> getEveryAnswerOfElement(int id) {
         Element element = this.elementRepository.findById(id).orElseThrow(() -> new CommonException("Element nicht gefunden"));
         return element.getAnswers().stream().sorted(Comparator.comparingInt(Answer::getCount).reversed()).collect(Collectors.toList());
