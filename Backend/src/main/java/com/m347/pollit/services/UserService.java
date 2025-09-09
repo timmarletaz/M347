@@ -8,6 +8,7 @@ import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.requests.UpdateUserRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,9 @@ public class UserService {
         this.tokenRepository = tokenRepository;
         this.clock = clock;
     }
+
     //    getestet
+    @Transactional
     public UserEntity register(RegisterRequest registerRequest) {
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
             throw new CommonException("User mit email " + registerRequest.getEmail() + " existiert bereits");
@@ -43,7 +46,9 @@ public class UserService {
         UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
         return userRepository.save(user);
     }
+
     //    getestet
+    @Transactional
     public UserEntity login(LoginRequest loginRequest) {
         UserEntity user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new CommonException("Kein User mit Email " + loginRequest.getEmail() + " gefunden"));
         if(encoder.matches(loginRequest.getPassword(), user.getPassword())) {
@@ -53,25 +58,28 @@ public class UserService {
         }
     }
 
+    @Transactional
     public TokenEntity generateToken(UserEntity owner) {
         TokenEntity tokenEntity = new TokenEntity(UUID.randomUUID().toString(), owner);
         return this.tokenRepository.save(tokenEntity);
     }
 
+    @Transactional
     public UserEntity extractUserFromToken(String token) {
         UserEntity userEntity = this.tokenRepository.findByToken(token).orElseThrow(() -> new CommonException("Ungültiges Token")).getOwner();
         return userEntity;
     }
 
-//    getestet
+//  getestet
+    @Transactional
     public boolean getTokenState(String token) {
             return tokenRepository.findByToken(token)
                     .map(t -> t.getExpires().isAfter(LocalDateTime.now(clock)))
                     .orElse(false);
     }
 
-//    TDD
-
+//  TDD
+    @Transactional
     public UserEntity updateUserData(int userId, UpdateUserRequest request) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException("User wurde nicht gefunden"));
@@ -96,13 +104,14 @@ public class UserService {
         user.setFirstname(request.getFirstName());
         user.setLastname(request.getLastName());
         // BUG: Absichtlich Passwort nicht überschreiben
-        user.setPassword(request.getPassword());
+       user.setPassword(request.getPassword());
         user.setEmail(request.getEmail());
 
 
         return userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(int userId) {
         Optional<UserEntity> userOpt = userRepository.findById(userId);
         if (userOpt.isPresent()) {
