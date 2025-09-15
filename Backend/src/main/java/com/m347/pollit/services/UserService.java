@@ -123,5 +123,11 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public void createUserFail(RegisterRequest registerRequest) {
+        UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
+        userRepository.save(user);
+        throw new RuntimeException("Transaction tests");
+    }
 
 }
