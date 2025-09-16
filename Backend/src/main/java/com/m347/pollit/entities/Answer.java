@@ -26,6 +26,7 @@ public class Answer {
 
     private int count = 1;
 
+    @Column(name = "`value`")
     private String value;
 
     public void increaseCount() {
