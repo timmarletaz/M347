@@ -9,8 +9,18 @@ import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.requests.UpdateUserRequest;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -18,23 +28,25 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
 
     private final TokenRepository tokenRepository;
 
     private final Clock clock;
-
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, TokenRepository tokenRepository, Clock clock) {
+    public UserService(UserRepository userRepository, TokenRepository tokenRepository, Clock clock, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.clock = clock;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //    getestet
@@ -43,19 +55,21 @@ public class UserService {
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
             throw new CommonException("User mit email " + registerRequest.getEmail() + " existiert bereits");
         }
-        UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
+        UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), passwordEncoder.encode(registerRequest.getPassword()));
         return userRepository.save(user);
     }
 
     //    getestet
     @Transactional
     public UserEntity login(LoginRequest loginRequest) {
-        UserEntity user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new CommonException("Kein User mit Email " + loginRequest.getEmail() + " gefunden"));
-        if(encoder.matches(loginRequest.getPassword(), user.getPassword())) {
-           return user;
-        } else {
-            throw new CommonException("Falsche Email oder Passwort");
+        try {
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            return (UserEntity) auth.getPrincipal();
+        } catch (AuthenticationException e) {
+            log.info("FAILED LOGIN: {}", e.getMessage());
         }
+        throw new CommonException("Falsche Username oder Passwort", HttpStatus.UNAUTHORIZED);
     }
 
     @Transactional
@@ -125,9 +139,13 @@ public class UserService {
 
     @Transactional
     public void createUserFail(RegisterRequest registerRequest) {
-        UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
+        UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), passwordEncoder.encode(registerRequest.getPassword()));
         userRepository.save(user);
         throw new RuntimeException("Transaction tests");
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
 }

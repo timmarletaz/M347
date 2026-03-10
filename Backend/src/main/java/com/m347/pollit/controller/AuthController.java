@@ -27,9 +27,8 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+    public UserEntity login(@RequestBody LoginRequest loginRequest) {
         UserEntity user = this.userService.login(loginRequest);
-        TokenEntity token = userService.generateToken(user);
-        return new LoginResponse(token.getToken(),token.getExpires(), user);
+        return user;
     }
 }

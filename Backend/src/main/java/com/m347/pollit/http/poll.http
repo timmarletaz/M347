@@ -1,6 +1,6 @@
 POST http://localhost:8080/api/polls/create
 Content-Type: application/json
-token: 468aa365-2169-4d68-a921-4e57e9f60b05
+token: 2e7461ab-7b8c-4746-b56e-35f60be3a77b
 
 {
   "description": "Test",
@@ -52,7 +52,7 @@ token: 468aa365-2169-4d68-a921-4e57e9f60b05
 
 ###
 
-GET http://localhost:8080/api/polls/QGNR3541
+GET http://localhost:8080/api/polls/PHGW0641
 
 ###
 

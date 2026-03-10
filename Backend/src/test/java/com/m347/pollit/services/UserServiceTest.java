@@ -41,7 +41,7 @@ class UserServiceTest {
     @BeforeEach
     void setup() {
         Clock fixedClock = Clock.fixed(Instant.parse("2025-08-19T10:00:00Z"), ZoneId.of("UTC"));
-        userService = new UserService(userRepository, tokenRepository, fixedClock);
+        userService = new UserService(userRepository, tokenRepository, fixedClock, null, new BCryptPasswordEncoder());
     }
 
 //    Time Freezing tests

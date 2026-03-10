@@ -1,5 +1,6 @@
 package com.m347.pollit.services;
 
+import ch.qos.logback.core.util.StringUtil;
 import com.m347.pollit.ElementType;
 import com.m347.pollit.entities.Answer;
 import com.m347.pollit.entities.Element;
@@ -17,6 +18,7 @@ import com.m347.pollit.responses.SummaryElement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
@@ -48,6 +50,7 @@ public class PollService {
             element.setRequired(elementRequest.isRequired());
             element.setPoll(poll);
         }
+
         poll.setDescription(createPollRequest.getDescription());
         poll.setCreator(owner);
         poll.setUuid(this.generateUniquePollId());
