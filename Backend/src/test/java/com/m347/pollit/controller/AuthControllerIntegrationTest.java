@@ -2,6 +2,8 @@ package com.m347.pollit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.m347.pollit.entities.UserEntity;
+import com.m347.pollit.repositories.PollRepository;
+import com.m347.pollit.repositories.TokenRepository;
 import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
@@ -32,6 +34,8 @@ class AuthControllerIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenRepository tokenRepository;
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -39,6 +43,7 @@ class AuthControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        tokenRepository.deleteAll();
         userRepository.deleteAll(); // DB leeren vor jedem Test
 
         UserEntity user = new UserEntity(

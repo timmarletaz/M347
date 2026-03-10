@@ -1,6 +1,7 @@
 package com.m347.pollit.services;
 
 import com.m347.pollit.entities.UserEntity;
+import com.m347.pollit.repositories.PollRepository;
 import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.RegisterRequest;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,8 @@ public class DbTest {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private PollRepository pollRepository;
 
     @Test
     void testAtomicity() {
