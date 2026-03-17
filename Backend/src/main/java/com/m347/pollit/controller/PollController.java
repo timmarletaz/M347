@@ -9,7 +9,9 @@ import com.m347.pollit.requests.CreatePollRequest;
 import com.m347.pollit.responses.AdminResponse;
 import com.m347.pollit.services.PollService;
 import com.m347.pollit.services.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +25,12 @@ public class PollController {
 
     @Autowired
     private PollService pollService;
+
+    @RolesAllowed("ROLE_USER")
+    @GetMapping("test")
+    public String test() {
+        return "Erfolgreich";
+    }
 
     @GetMapping("{id}")
     public Poll getPoll(@PathVariable String id) {

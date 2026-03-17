@@ -4,23 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de80c09a-857e-43d4-9423-b94a9d8dc604" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backend/locustfile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/Provider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/SecurityConfig.java" afterDir="false" />
+    <list default="true" id="de80c09a-857e-43d4-9423-b94a9d8dc604" name="Changes" comment="Stuff">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/GlobalExceptionhandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/GlobalExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/exceptions/CommonException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/exceptions/CommonException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/http/poll.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/http/poll.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/security/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/PollService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/PollService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/http/auth.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/http/auth.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/http/poll.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/http/poll.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +42,10 @@
     &quot;accountId&quot;: &quot;4d547a91-2294-4876-9f02-15f0bf8d04ae&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -59,31 +55,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.pollit [clean,install].executor": "Run",
-    "Maven.pollit [clean,package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.PollitApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;HTTP Request.auth | #2.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.auth | #3.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pollit [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pollit [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.PollitApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Tim Berufsschule/.jdks/openjdk-25.0.2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Spring Boot.PollitApplication">
+    <configuration name="auth | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" index="2" requestIdentifier="#2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="auth | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="PollitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="pollit" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.m347.pollit.PollitApplication" />
@@ -91,12 +96,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.auth | #3" />
+        <item itemvalue="HTTP Request.auth | #2" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.26775.15" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.26775.15" />
       </set>
     </attachedChunks>
   </component>
@@ -113,11 +124,35 @@
       <workItem from="1773132097801" duration="18000" />
       <workItem from="1773132138524" duration="57000" />
       <workItem from="1773132206852" duration="33000" />
-      <workItem from="1773132248747" duration="5404000" />
+      <workItem from="1773132248747" duration="5414000" />
+      <workItem from="1773221841359" duration="3000" />
+      <workItem from="1773222098470" duration="71000" />
+      <workItem from="1773222195828" duration="143000" />
+      <workItem from="1773339183004" duration="2000" />
+      <workItem from="1773581926551" duration="20000" />
+      <workItem from="1773732004998" duration="6050000" />
+      <workItem from="1773740607489" duration="38000" />
+      <workItem from="1773740661515" duration="39000" />
+      <workItem from="1773740719457" duration="155000" />
+      <workItem from="1773741605385" duration="739000" />
+      <workItem from="1773742371939" duration="257000" />
     </task>
+    <task id="LOCAL-00001" summary="Stuff">
+      <option name="closed" value="true" />
+      <created>1773138781643</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1773138781643</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stuff" />
   </component>
 </project>

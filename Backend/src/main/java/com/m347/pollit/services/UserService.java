@@ -5,18 +5,11 @@ import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
 import com.m347.pollit.repositories.TokenRepository;
 import com.m347.pollit.repositories.UserRepository;
-import com.m347.pollit.requests.LoginRequest;
 import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.requests.UpdateUserRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,15 +30,13 @@ public class UserService implements UserDetailsService {
     private final TokenRepository tokenRepository;
 
     private final Clock clock;
-    private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, TokenRepository tokenRepository, Clock clock, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, TokenRepository tokenRepository, Clock clock, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.clock = clock;
-        this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -57,19 +48,6 @@ public class UserService implements UserDetailsService {
         }
         UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), passwordEncoder.encode(registerRequest.getPassword()));
         return userRepository.save(user);
-    }
-
-    //    getestet
-    @Transactional
-    public UserEntity login(LoginRequest loginRequest) {
-        try {
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            return (UserEntity) auth.getPrincipal();
-        } catch (AuthenticationException e) {
-            log.info("FAILED LOGIN: {}", e.getMessage());
-        }
-        throw new CommonException("Falsche Username oder Passwort", HttpStatus.UNAUTHORIZED);
     }
 
     @Transactional
