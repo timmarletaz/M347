@@ -8,6 +8,8 @@ import com.m347.pollit.requests.UpdateUserRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +36,16 @@ public class UserService implements UserDetailsService {
     }
 
     //    getestet
+    @Transactional
+    public UserEntity getUserFromSession() {
+        UserEntity sessionUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity user = (UserEntity) loadUserByUsername(sessionUser.getUsername());
+        if (user != null) {
+            return user;
+        }
+        throw new CommonException("Ungültige Session", HttpStatus.UNAUTHORIZED);
+    }
+
     @Transactional
     public UserEntity register(RegisterRequest registerRequest) {
         if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {

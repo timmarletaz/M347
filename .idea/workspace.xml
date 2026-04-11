@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de80c09a-857e-43d4-9423-b94a9d8dc604" name="Changes" comment="Stuff">
+    <list default="true" id="de80c09a-857e-43d4-9423-b94a9d8dc604" name="Changes" comment="Session + authentication">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/http/auth.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/http/auth.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/http/auth.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/http/auth.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/http/poll.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/http/poll.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +30,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -55,38 +57,66 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;HTTP Request.auth | #2.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.auth | #3.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.pollit [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.pollit [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.PollitApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Tim Berufsschule/.jdks/openjdk-25.0.2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "HTTP Request.auth | #1.executor": "Run",
+    "HTTP Request.auth | #2 (1).executor": "Run",
+    "HTTP Request.auth | #2.executor": "Run",
+    "HTTP Request.auth | #3.executor": "Run",
+    "Maven.pollit [clean,install].executor": "Run",
+    "Maven.pollit [clean,package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.PollitApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Tim Berufsschule/.jdks/openjdk-25.0.2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RunDashboard">
+    <option name="configurationStatuses">
+      <map>
+        <entry key="HttpClient.HttpRequestRunConfigurationType">
+          <value>
+            <map>
+              <entry key="auth | #1" value="STOPPED" />
+              <entry key="auth | #2 (1)" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="RunManager" selected="Spring Boot.PollitApplication">
-    <configuration name="auth | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" index="2" requestIdentifier="#2" runType="Run single request">
+    <configuration name="auth | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" executionIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="auth | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" index="3" requestIdentifier="#3" runType="Run single request">
+    <configuration name="auth | #2 (1)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" executionIdentifier="#2" index="2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="auth | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" index="2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="auth | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" index="3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="auth | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Backend/http/auth.http" executionIdentifier="#4" index="4" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="PollitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -98,6 +128,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.auth | #4" />
+        <item itemvalue="HTTP Request.auth | #2 (1)" />
+        <item itemvalue="HTTP Request.auth | #1" />
         <item itemvalue="HTTP Request.auth | #3" />
         <item itemvalue="HTTP Request.auth | #2" />
       </list>
@@ -135,7 +168,16 @@
       <workItem from="1773740661515" duration="39000" />
       <workItem from="1773740719457" duration="155000" />
       <workItem from="1773741605385" duration="739000" />
-      <workItem from="1773742371939" duration="257000" />
+      <workItem from="1773742371939" duration="1126000" />
+      <workItem from="1773916745463" duration="1780000" />
+      <workItem from="1774000420532" duration="1861000" />
+      <workItem from="1774336145223" duration="4006000" />
+      <workItem from="1774449483473" duration="3000" />
+      <workItem from="1774781655459" duration="352000" />
+      <workItem from="1775121248078" duration="28000" />
+      <workItem from="1775575616829" duration="166000" />
+      <workItem from="1775753702355" duration="374000" />
+      <workItem from="1775935961939" duration="3433000" />
     </task>
     <task id="LOCAL-00001" summary="Stuff">
       <option name="closed" value="true" />
@@ -145,14 +187,42 @@
       <option name="project" value="LOCAL" />
       <updated>1773138781643</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Session + authentication">
+      <option name="closed" value="true" />
+      <created>1773742910951</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1773742910951</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Session + authentication">
+      <option name="closed" value="true" />
+      <created>1775575705689</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775575705689</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stuff" />
+    <MESSAGE value="Session + authentication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Session + authentication" />
   </component>
 </project>

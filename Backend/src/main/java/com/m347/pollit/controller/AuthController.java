@@ -68,7 +68,7 @@ public class AuthController {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
-            return new ResponseEntity<>("Erfolgreich abgemeldet",HttpStatus.OK);
+            return new ResponseEntity<>("Erfolgreich abgemeldet", HttpStatus.OK);
         }
         return new ResponseEntity<>("Keine gültige Session gefunden", HttpStatus.UNAUTHORIZED);
     }

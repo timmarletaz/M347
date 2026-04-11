@@ -12,6 +12,8 @@ import com.m347.pollit.services.UserService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,12 +41,9 @@ public class PollController {
 
     @PostMapping("create")
     public Poll createPoll(@RequestBody CreatePollRequest poll, @RequestHeader String token) {
-        if(this.userService.getTokenState(token)){
-            UserEntity user = this.userService.extractUserFromToken(token);
-            Poll savedPoll = this.pollService.createPoll(poll, user);
-            return savedPoll;
-        }
-        throw new CommonException("Ungültiges Token");
+        UserEntity user = userService.getUserFromSession();
+        Poll savedPoll = this.pollService.createPoll(poll, user);
+        return savedPoll;
     }
 
     @PostMapping("{id}/submit")
@@ -55,28 +54,22 @@ public class PollController {
 
     @GetMapping("{id}/admin")
     public AdminResponse getSummary(@PathVariable String id, @RequestHeader String token) {
-        if(this.userService.getTokenState(token)){
-            UserEntity user = this.userService.extractUserFromToken(token);
-            Poll poll = this.pollService.getPollByUuid(id);
-            if(!poll.getCreator().equals(user)){
-                throw new CommonException("Nicht berechtigt diese Aktion auszuführen");
-            }
-            return this.pollService.generateSummary(poll);
+        UserEntity user = userService.getUserFromSession();
+        Poll poll = this.pollService.getPollByUuid(id);
+        if (!poll.getCreator().equals(user)) {
+            throw new CommonException("Nicht berechtigt diese Aktion auszuführen");
         }
-        throw new CommonException("Ungültiges Token");
+        return this.pollService.generateSummary(poll);
     }
 
     @GetMapping("{id}/all/{elementId}")
     public List<Answer> getAllAnswersForElement(@PathVariable int elementId, @PathVariable String id, @RequestHeader String token) {
-        if(this.userService.getTokenState(token)) {
-            UserEntity user = this.userService.extractUserFromToken(token);
-            Poll poll = this.pollService.getPollByUuid(id);
-            if (!poll.getCreator().equals(user)) {
-                throw new CommonException("Nicht berechtigt diese Aktion auszuführen");
-            }
-            return this.pollService.getEveryAnswerOfElement(elementId);
+        UserEntity user = userService.getUserFromSession();
+        Poll poll = this.pollService.getPollByUuid(id);
+        if (!poll.getCreator().equals(user)) {
+            throw new CommonException("Nicht berechtigt diese Aktion auszuführen", HttpStatus.UNAUTHORIZED);
         }
-        throw new CommonException("Ungültiges Token");
+        return this.pollService.getEveryAnswerOfElement(elementId);
     }
 
 }
