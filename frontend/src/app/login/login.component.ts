@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {Router, RouterLink} from '@angular/router';
+import {debug} from 'node:util';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +25,9 @@ export class LoginComponent {
     return !(this.email.trim() !== "" && this.password.trim() !== "");
   }
 
-  login() {
+  async login() {
     this.loading = true;
-    this.authService.loginRequest(this.email, this.password);
+    await this.authService.loginRequest(this.email, this.password);
     this.authService.getUser().subscribe(user => {
       if(user !== null) {
         this.router.navigate(['/dashboard']);

@@ -33,6 +33,7 @@ export class DashboardComponent {
   constructor(private alertServive: AlertService, private authService: AuthService, private pollService: PollServiceService, private router: Router, private fb: FormBuilder) {
     this.loading = true;
     setTimeout(() => {
+      console.log("LOAD USER FROM DASHBOARD");
       this.authService.loadUser();
     }, 2000);
     this.authService.getUser().subscribe(user => {
@@ -104,9 +105,8 @@ export class DashboardComponent {
     return element.required ? "*":"";
   }
 
-  logout() {
-    console.log("hallo");
-    localStorage.clear();
+  async logout() {
+    await this.authService.logout();
     this.alertServive.showToast("Erfolgreich Ausgeloggt", "success", 2500);
     this.router.navigate(["/"]);
   }

@@ -1,86 +1,121 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject, catchError} from 'rxjs';
+import {BehaviorSubject, firstValueFrom} from 'rxjs';
 import {LoginResponse, UserModel} from './User.model';
 import {AlertService} from './alert-service';
-import {Poll, PollPreview} from './Poll';
+import {PollPreview} from './Poll';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private httpClient: HttpClient, private alertService: AlertService) { }
+  constructor(private httpClient: HttpClient, private alertService: AlertService) {
+  }
 
-  private baseUrl = "http://localhost:8080/api/"
-  private user = new BehaviorSubject<UserModel|null>(null);
+  private baseUrl = "/api/"
+  private user = new BehaviorSubject<UserModel | null>(null);
   private pollPreview = new BehaviorSubject<PollPreview[] | null>(null);
 
-  loginRequest(email: string, password: string) {
-    this.httpClient.post<LoginResponse>(this.baseUrl + "auth/login", {password: password, email: email}, {headers: new HttpHeaders({
-        "ContentType": "application/json"
-        }
-      )}).subscribe(response => {
-        console.log(response);
-        localStorage.setItem("token", response.token);
-        console.log(localStorage.getItem("token"));
-        localStorage.setItem("exp", response.expires.toString());
-        this.user.next(response.user);
-        this.alertService.showToast("Erfolgreich eingeloggt", "success", 2500);
-    }, error => {
-        this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
-        this.user.next(null);
-    })
+  async loginRequest(email: string, password: string) {
+    try {
+      let user = await firstValueFrom(
+        this.httpClient.post<UserModel>(
+          this.baseUrl + "auth/login",
+          {email, password},
+          {
+            withCredentials: true,
+            headers: new HttpHeaders({
+              "Content-Type": "application/json"
+            })
+          }
+        )
+      );
+      await this.loadCsrfToken();
+      if (user !== null) {
+        console.log(user);
+        this.user.next(user);
+        this.alertService.showToast("Erfolgreich Angemeldet", "success", 2500);
+      }
+    } catch (error: any) {
+      this.alertService.showToast(error.error.message || "Anmeldung fehlgeschlagen", "danger", 2500);
+      this.user.next(null);
+    }
+  }
+
+
+  async loadCsrfToken() {
+    try {
+      await firstValueFrom(this.httpClient.get(this.baseUrl + "auth/csrf", {withCredentials: true}));
+    } catch (error) {
+      console.log(error);
+      this.alertService.showToast("Es ist ein unerwarteter Fehler aufgetreten", "danger", 2500);
+      throw error;
+    }
   }
 
   getUser() {
     return this.user.asObservable();
   }
 
-  loadUser() {
-    let token = localStorage.getItem("token");
-    if(token) {
-      this.httpClient.get<UserModel>(this.baseUrl + "user", {headers: new HttpHeaders({
-          token: token as string
-        })}).subscribe(response => {
-        console.log(response);
-        this.user.next(response);
-      }, error => {
-          this.alertService.showToast("Daten konnten nicht geladen werden", "danger", 2500);
-      })
+  async loadUser() {
+    if (this.user.getValue() !== null) {
+      return this.user.getValue();
     }
+    try {
+      let user = await firstValueFrom(this.httpClient.get<UserModel>(this.baseUrl + "user", {withCredentials: true}));
+      if (user !== null) {
+        this.user.next(user);
+        return user;
+      }
+    } catch (e) {
+      // IGNORE
+    }
+    return null;
   }
 
   loadPolls() {
-    let token = localStorage.getItem("token");
-    if(token) {
-      this.httpClient.get<PollPreview[]>(this.baseUrl + "user/polls/all", {headers: new HttpHeaders({
-          token: token as string
-        })}).subscribe(response => {
-          console.log(response);
-          this.pollPreview.next(response);
-      }, error => {
-          this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
-      })
-    }
+    this.httpClient.get<PollPreview[]>(this.baseUrl + "user/polls/all", {withCredentials: true}).subscribe(response => {
+      console.log(response);
+      this.pollPreview.next(response);
+    }, error => {
+      this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
+    })
   }
 
   getPollPreviews() {
     return this.pollPreview.asObservable();
   }
 
-  register(email: string, password: string, vorname: string, nachname: string) {
-    this.httpClient.post<LoginResponse>(this.baseUrl + "auth/register", {email: email, firstname: vorname, lastname: nachname, password: password}, {headers: new HttpHeaders({
-        "ContentType": "application/json"
-      })}).subscribe(response => {
-          localStorage.setItem("token", response.token);
-          console.log(localStorage.getItem("token"));
-          localStorage.setItem("exp", response.expires.toString());
-          this.user.next(response.user);
-          this.alertService.showToast("Erfolgreich Registriert", "success", 2500);
-    }, error => {
-        this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
-    });
+  async register(email: string, password: string, vorname: string, nachname: string) {
+    try {
+      let user = await firstValueFrom(this.httpClient.post<UserModel>(this.baseUrl + "auth/register", {
+        email: email,
+        firstname: vorname,
+        lastname: nachname,
+        password: password
+      }, {
+        withCredentials: true, headers: new HttpHeaders({
+          "Content-Type": "application/json"
+        })
+      }));
+      await this.loadCsrfToken();
+      if (user !== null) {
+        this.user.next(user);
+        this.alertService.showToast("Erfolgreich Registriert", "success", 2500);
+      }
+    } catch (error: any) {
+      console.log(error);
+      this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
+    }
   }
 
+  async logout() {
+    try {
+      this.user.next(null);
+      await firstValueFrom(this.httpClient.delete(this.baseUrl + "auth/logout", {withCredentials: true}));
+    } catch (e) {
+      this.alertService.showToast("Abmelden fehlgeschlagen", "warning", 2500);
+    }
+  }
 }

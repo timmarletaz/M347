@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,12 +39,19 @@ public class UserService implements UserDetailsService {
     //    getestet
     @Transactional
     public UserEntity getUserFromSession() {
-        UserEntity sessionUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserEntity user = (UserEntity) loadUserByUsername(sessionUser.getUsername());
-        if (user != null) {
-            return user;
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new CommonException("Ungültige Session", HttpStatus.UNAUTHORIZED);
         }
-        throw new CommonException("Ungültige Session", HttpStatus.UNAUTHORIZED);
+
+        UserEntity sessionUser = (UserEntity) authentication.getPrincipal();
+
+        return userRepository.findByEmail(sessionUser.getUsername())
+                .orElseThrow(() ->
+                        new CommonException("Ungültige Session", HttpStatus.UNAUTHORIZED));
     }
 
     @Transactional

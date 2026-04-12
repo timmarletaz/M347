@@ -6,7 +6,6 @@ import com.m347.pollit.responses.PollPreviewResponse;
 import com.m347.pollit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +29,10 @@ public class UserController {
     @GetMapping()
     public UserEntity getUser() {
         try {
-            return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return userService.getUserFromSession();
         } catch (Exception e) {
             throw new CommonException("Authentifizierung fehlgeschlagen", HttpStatus.UNAUTHORIZED);
         }
     }
+
 }

@@ -26,3 +26,7 @@ GET http://localhost:8080/api/polls/test
 ###
 
 POST http://localhost:8080/api/auth/logout
+
+###
+
+GET http://localhost:8080/api/auth/csrf

@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   isAnswering: boolean = false;
 
   constructor(private router: Router) {
-    console.log = () => {}
+    //console.log = () => {}
   }
 
   ngOnInit() {
