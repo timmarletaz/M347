@@ -5,6 +5,7 @@ import {Poll, PollDetails} from './Poll';
 import {AlertService} from './alert-service';
 import {Router} from '@angular/router';
 import {ElementRequest} from './elementRequest.model';
+import {firstValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

@@ -15,6 +15,36 @@
         }
       </div>
     }
+    <button class="w-fit mx-auto" (click)="elementOverview=true">Neues Element hinzufügen</button>
+    <div class="w-full h-full absolute top-0 left-0 flex justify-center items-center px-5"
+         style="background-color: rgba(0,0,0,0.3)" (click)="elementOverview=false">
+      <div class="max-w-screen-md w-full">
+        <form class="w-full h-fit bg-white rounded flex flex-col p-6" (click)="$event.stopPropagation()"
+              (ngSubmit)="addNewElement()">
+          <label for="type" class="poppins-regular">Wählen Sie den Typ aus</label>
+          <select name="type" id="type" class="rounded mt-2 py-2" [(ngModel)]="type">
+            <option selected value="INPUT" name="input">Input</option>
+            <option value="CHECKBOX" name="checkbox">Checkbox</option>
+            <option value="SLIDER" name="range">Range</option>
+            <option value="DATE" name="datum">Datum</option>
+            <option value="EMAIL" name="email">Email</option>
+            <option value="NUMBER" name="zahl">Zahl</option>
+            <option value="TEXT" name="text">Textarea</option>
+          </select>
+          <label for="label" class="poppins-regular mt-5">Label</label>
+          <input class="w-full h-8 mt-2 px-2 py-5 rounded" placeholder="Label" id="label" required [(ngModel)]="label"
+                 name="label">
+          <label for="placeholder" class="poppins-regular mt-5">Placeholder</label>
+          <input class="w-full h-8 mt-2 px-2 py-5 rounded" placeholder="Placeholder" id="placeholder" required
+                 [(ngModel)]="placeholder" name="placeholder">
+          <div class="flex mt-5">
+            <input type="checkbox" class="w-6 h-6" id="required" [(ngModel)]="required" name="required">
+            <p class="ps-2 poppins-regular">Erforderlich</p>
+          </div>
+          <button class="mt-6 poppins-medium" type="submit">Hinzufügen</button>
+        </form>
+      </div>
+    </div>
     <button class="px-8 py-3 mb-5 mt-auto" (click)="deletePoll()">Umfrage löschen</button>
   </div>
 }

@@ -105,7 +105,7 @@ export class AuthService {
         this.alertService.showToast("Erfolgreich Registriert", "success", 2500);
       }
     } catch (error: any) {
-      console.log(error);
+      console.log(error.error.message);
       this.alertService.showToast(error.error.message || "Es ist etwas schiefgelaufen", "danger", 2500);
     }
   }

@@ -70,17 +70,12 @@ public class PollController {
         return this.pollService.getEveryAnswerOfElement(elementId);
     }
 
-    @PostMapping("debug")
-    public Object debug(Authentication auth, HttpSession session) {
-        return session.getAttribute("SPRING_SECURITY_CONTEXT");
+    @DeleteMapping("{id}")
+    public void deletePoll(@PathVariable String id) {
+        this.pollService.deletePoll(id);
     }
 
-    @DeleteMapping("polls/{id}")
-    public void deletePoll(@PathVariable String uuid) {
-        this.pollService.deletePoll(uuid);
-    }
-
-    @DeleteMapping("polls/{uuid}/element/{id}")
+    @DeleteMapping("{uuid}/element/{id}")
     public void deleteElement(@PathVariable String uuid, @PathVariable Long id) {
         if(uuid != null && !uuid.isBlank() && id != null) {
             this.pollService.deleteElement(uuid, id);

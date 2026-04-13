@@ -12,6 +12,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,12 +38,11 @@ public class UserService implements UserDetailsService {
 
     private PollRepository pollRepository;
 
-
     @PostConstruct
     public void init() {
         if(this.userRepository.findByEmail("tim@gmail.com").isEmpty()) {
             // Für Demonstration
-            UserEntity user = new UserEntity("Tim", "Marlétaz", "tim@gmail.com", passwordEncoder.encode("123456789"), "ADMIN");
+            UserEntity user = new UserEntity("Tim", "Marletaz", "tim@gmail.com", passwordEncoder.encode("123456789"), "ADMIN");
             this.userRepository.save(user);
         } else {
             log.info("Admin user already exists, skipping initialization");

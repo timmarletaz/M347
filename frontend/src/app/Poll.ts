@@ -31,16 +31,18 @@ export interface PollPreview {
   }
 }
 
+export interface PollElement {
+  id: number;
+  label: string;
+  placeholder: string;
+  type: string;
+  required: boolean;
+  active: boolean;
+}
+
 export interface PollDetails {
   elements: {
-    element: {
-      id: number;
-      label: string;
-      placeholder: string;
-      type: string;
-      required: boolean;
-      active: boolean;
-    };
+    element: PollElement;
     topAnswers: {
       answer: {
         id: number;

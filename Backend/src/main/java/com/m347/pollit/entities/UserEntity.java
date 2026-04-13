@@ -2,6 +2,9 @@ package com.m347.pollit.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +33,17 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3, max = 50)
+    @Pattern(regexp = "^[\\p{L}0-9 ]{3,}$")
     private String firstname;
+
+    @Size(min = 3, max = 50)
+    @Pattern(regexp = "^[\\p{L}0-9 ]{3,}$")
     private String lastname;
+
+    @Email
     private String email;
+
     private String role;
 
     @JsonIgnore
