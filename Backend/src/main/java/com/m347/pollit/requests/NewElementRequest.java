@@ -1,4 +1,4 @@
-package com.m347.pollit.responses;
+package com.m347.pollit.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +7,10 @@ import lombok.Setter;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class AdminResponse {
-    private List<ElementSummary> elements;
-    private String creator;
+public class NewElementRequest {
+    List<ElementRequest> newElements;
 }

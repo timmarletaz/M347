@@ -9,17 +9,18 @@ import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
 import com.m347.pollit.repositories.ElementRepository;
 import com.m347.pollit.repositories.PollRepository;
-import com.m347.pollit.requests.AnswerRequest;
-import com.m347.pollit.requests.CreatePollRequest;
-import com.m347.pollit.requests.ElementRequest;
+import com.m347.pollit.requests.*;
 import com.m347.pollit.responses.AdminResponse;
 import com.m347.pollit.responses.ElementSummary;
 import com.m347.pollit.responses.SummaryElement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.lang.module.FindException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -35,7 +36,13 @@ public class PollService {
     private PollRepository pollRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private ElementRepository elementRepository;
+
+    private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String DIGITS = "0123456789";
 
     @Transactional
     public Poll createPoll(CreatePollRequest createPollRequest, UserEntity owner) {
@@ -68,7 +75,7 @@ public class PollService {
         List<Element> elements = poll.getElements();
 
         if (answerRequest.getValues().size() != elements.size()) {
-            throw new CommonException("Bitte alle Fragen beantworten");
+            throw new CommonException("Bitte alle Fragen beantworten", HttpStatus.NOT_ACCEPTABLE);
         }
 
         for (int i = 0; i < elements.size(); i++) {
@@ -128,8 +135,47 @@ public class PollService {
         this.pollRepository.save(poll);
     }
 
-    private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String DIGITS = "0123456789";
+    public List<Element> editPoll(String uuid, NewElementRequest newElementRequest) {
+        Poll poll =  this.getPollByUuid(uuid);
+        if(newElementRequest.getNewElements().isEmpty()) {
+            return poll.getElements();
+        }
+        UserEntity user = this.userService.getUserFromSession();
+        if(!poll.getCreator().equals(user) && !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            throw new CommonException("Nicht berechtigt, diese Aktion auszuführen", HttpStatus.UNAUTHORIZED);
+        }
+        for(ElementRequest newElement : newElementRequest.getNewElements()) {
+            if(newElement.getElementId() != null) {
+                int index = poll.getElements().indexOf(poll.getElements().stream().filter(item -> item.getId().equals(newElement.getElementId())).findFirst().orElseThrow(() -> new CommonException("Element wurde nicht gefunden", HttpStatus.NOT_FOUND)));
+                poll.addElement(new Element(newElement.getLabel(), newElement.getType(), newElement.getPlaceholder()), index);
+                pollRepository.save(poll);
+            } else {
+                poll.addElement(new Element(newElement.getLabel(), newElement.getType(), newElement.getPlaceholder()));
+                pollRepository.save(poll);
+            }
+        }
+
+        return poll.getElements();
+    }
+
+    public void deleteElement(String uuid, Long id) {
+        Poll poll = this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Poll wurde nicht gefunden"));
+        UserEntity user = this.userService.getUserFromSession();
+        if(!poll.getCreator().equals(user) && !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            throw new CommonException("Nich berechtigt, diese Aktion auszuführen", HttpStatus.UNAUTHORIZED);
+        }
+        Element element = poll.getElements().stream().filter(item -> item.getId().equals(id)).findFirst().orElseThrow(() -> new CommonException("Element wurde nicht gefunden", HttpStatus.NOT_FOUND));
+        poll.removeElement(element);
+        pollRepository.save(poll);
+    }
+
+    public void deletePoll(String uuid) {
+        Poll poll = this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Poll wurde nicht gefunden", HttpStatus.NOT_FOUND));
+        UserEntity user = this.userService.getUserFromSession();
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) || poll.getCreator().equals(user)) {
+            pollRepository.delete(poll);
+        }
+    }
 
     public String generateUniquePollId() {
         SecureRandom random = new SecureRandom();
@@ -171,11 +217,11 @@ public class PollService {
                     .map(answer -> new SummaryElement(answer, answer.getCount()))
                     .collect(Collectors.toList());
 
-            ElementSummary summary = new ElementSummary(element, topAnswers);
+            ElementSummary summary = new ElementSummary(element, element.isActive(), topAnswers);
             elementSummaries.add(summary);
         }
 
-        return new AdminResponse(elementSummaries);
+        return new AdminResponse(elementSummaries, poll.getCreator().getFirstname() + " " + poll.getCreator().getLastname());
     }
 
     @Transactional

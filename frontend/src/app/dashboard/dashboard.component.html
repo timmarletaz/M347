@@ -13,7 +13,10 @@
       <div class="w-full h-fit flex flex-col gap-5 px-5">
         @for (pollPreview of pollPreviews; track pollPreview.uuid) {
           <div class="h-fit w-full flex flex-col justify-center bg-white rounded-xl drop-shadow px-4 py-3 min-h-32">
-            <h1 class="text-2xl poppins-bold">{{ pollPreview.title }}</h1>
+            <div class="flex justify-between items-center">
+              <h1 class="text-2xl poppins-bold">{{ pollPreview.title }}</h1>
+              <h3>{{ pollPreview.creator }}</h3>
+            </div>
             <h3 class="poppins-regular text-base break-words mt-2">{{ pollPreview.description }}</h3>
             <p class="poppins-medium mt-2">Code: {{ pollPreview.uuid }}</p>
             <button class="w-fit self-end poppins-regular mt-3" (click)="loadPollDetails(pollPreview)">Details</button>

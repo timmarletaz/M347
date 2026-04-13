@@ -39,6 +39,7 @@ export interface PollDetails {
       placeholder: string;
       type: string;
       required: boolean;
+      active: boolean;
     };
     topAnswers: {
       answer: {

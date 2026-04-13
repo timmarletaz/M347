@@ -3,6 +3,7 @@ package com.m347.pollit.services;
 import com.m347.pollit.entities.TokenEntity;
 import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
+import com.m347.pollit.repositories.PollRepository;
 import com.m347.pollit.repositories.TokenRepository;
 import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.LoginRequest;
@@ -31,6 +32,9 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PollRepository pollRepository;
+
     @InjectMocks
     private UserService userService;
 
@@ -39,7 +43,7 @@ class UserServiceTest {
     @BeforeEach
     void setup() {
         Clock fixedClock = Clock.fixed(Instant.parse("2025-08-19T10:00:00Z"), ZoneId.of("UTC"));
-        userService = new UserService(userRepository, fixedClock, null);
+        userService = new UserService(userRepository, fixedClock, null, pollRepository);
     }
 
     /*

@@ -5,24 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de80c09a-857e-43d4-9423-b94a9d8dc604" name="Changes" comment="lock in 😭">
-      <change afterPath="$PROJECT_DIR$/frontend/proxy.conf.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/.env-example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/NewElementRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/http/auth.http" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/http/auth.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AdminController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/Element.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/Poll.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/Poll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/entities/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/CreatePollRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/CreatePollRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/ElementRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/ElementRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/requests/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/responses/AdminResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/responses/AdminResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/responses/ElementSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/responses/ElementSummary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/responses/PollPreviewResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/responses/PollPreviewResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/PollService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/PollService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/AuthGuard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/AuthGuard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/LoginGuard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/LoginGuard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/User.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/User.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/test/java/com/m347/pollit/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/Poll.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/Poll.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/dashboard/dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/poll-details/poll-details.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/poll-details/poll-details.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/poll-details/poll-details.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/poll-details/poll-details.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/poll-service.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/poll-service.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +68,10 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+    <option name="sortByName" value="true" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -88,20 +103,33 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Tim Berufsschule/.jdks/openjdk-25.0.2",
+    "last_opened_file_path": "C:/Users/B048580/UserData/Documents/M347/Backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "C:\\Users\\Tim Berufsschule\\Documents\\M347 - Projekt\\Frontend\\node_modules\\typescript\\lib",
+    "settings.editor.selected.configurable": "editor.preferences.import",
+    "ts.external.directory.path": "C:\\Users\\B048580\\AppData\\Roaming\\JetBrains\\IntelliJIdea2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\B048580\UserData\Documents\M347\Backend" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\B048580\UserData\Documents\M347\Backend" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationStatuses">
       <map>
@@ -135,12 +163,37 @@
       <method v="2" />
     </configuration>
     <configuration name="PollitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/Backend/.env" />
+      </option>
       <module name="pollit" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.m347.pollit.PollitApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="false" PARSER="env" IS_EXECUTABLE="false" PATH=".env" />
+        </ENTRIES>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="HTTP Request.auth | #1" />
+      <item itemvalue="HTTP Request.auth | #2 (1)" />
+      <item itemvalue="HTTP Request.auth | #3" />
+      <item itemvalue="HTTP Request.auth | #4" />
+      <item itemvalue="HTTP Request.auth | #5" />
+      <item itemvalue="Spring Boot.PollitApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="HTTP Request.auth | #2 (1)" />
@@ -194,6 +247,8 @@
       <workItem from="1775753702355" duration="374000" />
       <workItem from="1775935961939" duration="3610000" />
       <workItem from="1775975549802" duration="10677000" />
+      <workItem from="1776057957264" duration="13539000" />
+      <workItem from="1776077169518" duration="292000" />
     </task>
     <task id="LOCAL-00001" summary="Stuff">
       <option name="closed" value="true" />
@@ -249,21 +304,5 @@
     <MESSAGE value="Session + authentication" />
     <MESSAGE value="lock in " />
     <option name="LAST_COMMIT_MESSAGE" value="lock in " />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/PollController.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Backend/src/main/java/com/m347/pollit/controller/AuthController.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

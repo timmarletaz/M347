@@ -33,6 +33,7 @@ public class UserEntity implements UserDetails {
     private String firstname;
     private String lastname;
     private String email;
+    private String role;
 
     @JsonIgnore
     private String password;
@@ -46,11 +47,20 @@ public class UserEntity implements UserDetails {
         this.lastname = lastname;
         this.email = email;
         this.password = password;
+        this.role = "USER";
+    }
+
+    public UserEntity(String firstname, String lastname, String email, String password, String role) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.role));
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.m347.pollit.responses.PollPreviewResponse;
 import com.m347.pollit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,10 @@ public class UserController {
     @GetMapping("polls/all")
     public List<PollPreviewResponse> getAllPolls() {
         UserEntity user = userService.getUserFromSession();
-        return user.getPolls().stream().map(existingPoll -> new PollPreviewResponse(existingPoll.getUuid(), existingPoll.getTitle(), existingPoll.getDescription())).collect(Collectors.toList());
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            return userService.getAllPolls();
+        }
+        return user.getPolls().stream().map(existingPoll -> new PollPreviewResponse(existingPoll.getUuid(), existingPoll.getTitle(), existingPoll.getDescription(), user.getFirstname() + " " + user.getLastname())).collect(Collectors.toList());
     }
 
     @GetMapping()

@@ -16,6 +16,7 @@ export class PollDetailsComponent {
   loading: boolean = false;
   private id: string|null = null;
   protected pollDetail: PollDetails|null = null;
+  baseUrl = "/api/"
 
   constructor(private router: Router, private pollService: PollServiceService, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get("id");
@@ -29,6 +30,10 @@ export class PollDetailsComponent {
         this.loading = false;
       })
     }
+  }
+
+  async deletePoll() {
+    await this.pollService.deletePoll(this.id!);
   }
 
 }

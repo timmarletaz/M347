@@ -34,7 +34,8 @@ export class PollServiceService {
   }
 
   async submitAnswer(uuid: string, values: string[]) {
-    this.httpClient.post<string[]>(this.baseUrl + "polls/" + uuid + "/submit", {values}, {withCredentials: true,
+    this.httpClient.post<string[]>(this.baseUrl + "polls/" + uuid + "/submit", {values}, {
+      withCredentials: true,
       headers: new HttpHeaders({
         "ContentType": "application/json"
       })
@@ -48,13 +49,14 @@ export class PollServiceService {
   }
 
   getAdminPoll(id: string) {
-      this.httpClient.get<PollDetails>(this.baseUrl + "polls/" + id + "/admin", {withCredentials: true
-      }).subscribe(response => {
-        console.log(response);
-        this.pollDetails.next(response);
-      }, error => {
-        this.alertService.showToast(error.error.message, "danger", 2000);
-      })
+    this.httpClient.get<PollDetails>(this.baseUrl + "polls/" + id + "/admin", {
+      withCredentials: true
+    }).subscribe(response => {
+      console.log(response);
+      this.pollDetails.next(response);
+    }, error => {
+      this.alertService.showToast(error.error.message, "danger", 2000);
+    })
   }
 
   getPollDetails() {
@@ -73,6 +75,17 @@ export class PollServiceService {
       console.log(error);
       this.alertService.showToast(error.error.message || "Speichern fehlgeschlagen", "danger", 2000);
     })
+  }
+
+  async deletePoll(id: string) {
+    try {
+      await firstValueFrom(this.httpClient.delete(this.baseUrl + "polls/" + id, {withCredentials: true}));
+      await this.router.navigate(["/dashboard"]);
+      this.alertService.showToast("Erfolgreich gelöscht", "success", 2000);
+    } catch (e) {
+      console.log(e);
+      this.alertService.showToast("Löschen fehlgeschlagen", "danger", 2000);
+    }
   }
 
   getPollCode() {

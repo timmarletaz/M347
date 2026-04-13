@@ -13,4 +13,5 @@ public class PollPreviewResponse {
     private String uuid;
     private String title;
     private String description;
+    private String creator;
 }

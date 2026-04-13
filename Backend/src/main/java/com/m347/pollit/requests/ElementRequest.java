@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ElementRequest {
+    private Long elementId;
     private String label;
     private String placeholder;
     private ElementType type;

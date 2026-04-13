@@ -19,9 +19,6 @@ Content-Type: application/json
   "password": "123456789"
 }
 
-###
-
-GET http://localhost:8080/api/polls/test
 
 ###
 

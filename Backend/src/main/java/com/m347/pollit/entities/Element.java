@@ -33,6 +33,8 @@ public class Element {
 
     private boolean required = false;
 
+    private boolean isActive = true;
+
     @JsonIgnore
     @OneToMany(mappedBy = "element", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Answer> answers = new ArrayList<>();

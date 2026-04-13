@@ -17,6 +17,7 @@ import java.util.Map;
 @Getter
 public class ElementSummary {
     private Element element;
+    private boolean active;
     private List<SummaryElement> topAnswers = new ArrayList();
 }
 

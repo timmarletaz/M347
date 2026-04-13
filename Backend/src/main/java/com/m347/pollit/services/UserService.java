@@ -1,10 +1,14 @@
 package com.m347.pollit.services;
 
+import com.m347.pollit.entities.Poll;
 import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
+import com.m347.pollit.repositories.PollRepository;
 import com.m347.pollit.repositories.UserRepository;
 import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.requests.UpdateUserRequest;
+import com.m347.pollit.responses.PollPreviewResponse;
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -29,11 +35,26 @@ public class UserService implements UserDetailsService {
     private final Clock clock;
     private final PasswordEncoder passwordEncoder;
 
+    private PollRepository pollRepository;
+
+
+    @PostConstruct
+    public void init() {
+        if(this.userRepository.findByEmail("tim@gmail.com").isEmpty()) {
+            // Für Demonstration
+            UserEntity user = new UserEntity("Tim", "Marlétaz", "tim@gmail.com", passwordEncoder.encode("123456789"), "ADMIN");
+            this.userRepository.save(user);
+        } else {
+            log.info("Admin user already exists, skipping initialization");
+        }
+    }
+
     @Autowired
-    public UserService(UserRepository userRepository, Clock clock, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, Clock clock, PasswordEncoder passwordEncoder, PollRepository pollRepository) {
         this.userRepository = userRepository;
         this.clock = clock;
         this.passwordEncoder = passwordEncoder;
+        this.pollRepository = pollRepository;
     }
 
     //    getestet
@@ -61,6 +82,15 @@ public class UserService implements UserDetailsService {
         }
         UserEntity user = new UserEntity(registerRequest.getFirstname(), registerRequest.getLastname(), registerRequest.getEmail(), passwordEncoder.encode(registerRequest.getPassword()));
         return userRepository.save(user);
+    }
+
+    public List<PollPreviewResponse> getAllPolls() {
+        List<Poll> polls =  this.pollRepository.findAll();
+        List<PollPreviewResponse> responses = new ArrayList<>();
+        polls.stream().forEach(e -> {
+            responses.add(new PollPreviewResponse(e.getUuid(), e.getTitle(), e.getDescription(), e.getCreator().getFirstname() + " " + e.getCreator().getLastname()));
+        });
+        return responses;
     }
 
     //  TDD

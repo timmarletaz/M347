@@ -7,6 +7,7 @@ import com.m347.pollit.requests.RegisterRequest;
 import com.m347.pollit.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("register")
-    public UserEntity register(@RequestBody RegisterRequest registerRequest, HttpServletRequest request) {
+    public UserEntity register(@RequestBody @Valid RegisterRequest registerRequest, HttpServletRequest request) {
         UserEntity user = userService.register(registerRequest);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

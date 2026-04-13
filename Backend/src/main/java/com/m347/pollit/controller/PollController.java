@@ -11,10 +11,12 @@ import com.m347.pollit.services.PollService;
 import com.m347.pollit.services.UserService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,19 +32,13 @@ public class PollController {
     @Autowired
     private PollService pollService;
 
-    @RolesAllowed("ROLE_USER")
-    @GetMapping("test")
-    public String test() {
-        return "Erfolgreich";
-    }
-
     @GetMapping("{id}")
     public Poll getPoll(@PathVariable String id) {
         return this.pollService.getPublicPoll(id);
     }
 
     @PostMapping("create")
-    public Poll createPoll(@RequestBody CreatePollRequest poll) {
+    public Poll createPoll(@RequestBody @Valid CreatePollRequest poll) {
         UserEntity user = userService.getUserFromSession();
         Poll savedPoll = this.pollService.createPoll(poll, user);
         return savedPoll;
@@ -58,7 +54,7 @@ public class PollController {
     public AdminResponse getSummary(@PathVariable String id) {
         UserEntity user = userService.getUserFromSession();
         Poll poll = this.pollService.getPollByUuid(id);
-        if (!poll.getCreator().equals(user)) {
+        if (!poll.getCreator().equals(user) && !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             throw new CommonException("Nicht berechtigt diese Aktion auszuführen");
         }
         return this.pollService.generateSummary(poll);
@@ -68,7 +64,7 @@ public class PollController {
     public List<Answer> getAllAnswersForElement(@PathVariable int elementId, @PathVariable String id) {
         UserEntity user = userService.getUserFromSession();
         Poll poll = this.pollService.getPollByUuid(id);
-        if (!poll.getCreator().equals(user)) {
+        if (!poll.getCreator().equals(user) && !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             throw new CommonException("Nicht berechtigt diese Aktion auszuführen", HttpStatus.UNAUTHORIZED);
         }
         return this.pollService.getEveryAnswerOfElement(elementId);
@@ -77,6 +73,18 @@ public class PollController {
     @PostMapping("debug")
     public Object debug(Authentication auth, HttpSession session) {
         return session.getAttribute("SPRING_SECURITY_CONTEXT");
+    }
+
+    @DeleteMapping("polls/{id}")
+    public void deletePoll(@PathVariable String uuid) {
+        this.pollService.deletePoll(uuid);
+    }
+
+    @DeleteMapping("polls/{uuid}/element/{id}")
+    public void deleteElement(@PathVariable String uuid, @PathVariable Long id) {
+        if(uuid != null && !uuid.isBlank() && id != null) {
+            this.pollService.deleteElement(uuid, id);
+        }
     }
 
 }
