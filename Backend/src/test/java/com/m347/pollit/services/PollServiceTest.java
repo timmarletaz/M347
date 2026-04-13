@@ -41,7 +41,7 @@ class PollServiceTest {
 
     @Test
     void createPoll() {
-        CreatePollRequest createPollRequest = new CreatePollRequest("Test", "beschreibung", Arrays.asList(new ElementRequest("LABEL", "PLACEHOLDER", ElementType.EMAIL, true)));
+        CreatePollRequest createPollRequest = new CreatePollRequest("Test", "beschreibung", Arrays.asList(new ElementRequest(1L, "PLACEHOLDER", "",ElementType.EMAIL, true)));
         UserEntity owner = new UserEntity();
         when(pollRepository.findByUuid(anyString())).thenReturn(Optional.empty());
         Poll poll = pollService.createPoll(createPollRequest, owner);
@@ -57,7 +57,7 @@ class PollServiceTest {
     @Test
     void createPollWithoutTitleError() {
         createPollRequest.setTitle("");
-        createPollRequest.setElements(Arrays.asList(new ElementRequest("LABEL", "PLACEHOLDER", ElementType.EMAIL, true)));
+        createPollRequest.setElements(Arrays.asList(new ElementRequest(1L, "PLACEHOLDER", "",ElementType.EMAIL, true)));
         assertThrows(CommonException.class, () -> this.pollService.createPoll(createPollRequest, owner));
     }
 
@@ -72,14 +72,14 @@ class PollServiceTest {
 
     @Test
     void evaluateAnswersRequiredError() {
-        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element(1L, "LABEL", ElementType.DATE, "PLACEHOLDER", false, null, null), new Element(2L, "LABEL", ElementType.DATE, "PLACEHOLDER", true, null, null)));
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element(1L, "LABEL", ElementType.DATE, "PLACEHOLDER", false, true, null, null), new Element(2L, "LABEL", ElementType.DATE, "PLACEHOLDER", true, true, null, null)));
         AnswerRequest answerRequest = new AnswerRequest(Arrays.asList("asd@asd.com"));
         assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
     }
 
     @Test
     void evaluateAnswersEmptyListError() {
-        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element(1L, "LABEL", ElementType.DATE, "PLACEHOLDER", true, null, null)));
+        Poll poll = new Poll(1L, pollService.generateUniquePollId(), "Tim", "Test", new UserEntity(), Arrays.asList(new Element(1L, "LABEL", ElementType.DATE, "PLACEHOLDER", true, true, null, null)));
         AnswerRequest answerRequest = new AnswerRequest(Arrays.asList());
         assertThrows(CommonException.class, () -> pollService.evaluateAnswers(answerRequest, poll));
     }
