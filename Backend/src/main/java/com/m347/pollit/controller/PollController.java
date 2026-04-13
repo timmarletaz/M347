@@ -6,7 +6,11 @@ import com.m347.pollit.entities.UserEntity;
 import com.m347.pollit.exceptions.CommonException;
 import com.m347.pollit.requests.AnswerRequest;
 import com.m347.pollit.requests.CreatePollRequest;
+import com.m347.pollit.requests.ElementRequest;
+import com.m347.pollit.requests.NewElementRequest;
 import com.m347.pollit.responses.AdminResponse;
+import com.m347.pollit.responses.ElementSummary;
+import com.m347.pollit.responses.PollDto;
 import com.m347.pollit.services.PollService;
 import com.m347.pollit.services.UserService;
 import jakarta.annotation.security.RolesAllowed;
@@ -33,7 +37,7 @@ public class PollController {
     private PollService pollService;
 
     @GetMapping("{id}")
-    public Poll getPoll(@PathVariable String id) {
+    public PollDto getPoll(@PathVariable String id) {
         return this.pollService.getPublicPoll(id);
     }
 
@@ -70,15 +74,22 @@ public class PollController {
         return this.pollService.getEveryAnswerOfElement(elementId);
     }
 
+    @PutMapping("{id}/update")
+    public AdminResponse updatePoll(@PathVariable String id, @RequestBody NewElementRequest elementRequest) {
+        return this.pollService.editPoll(id, elementRequest);
+    }
+
     @DeleteMapping("{id}")
     public void deletePoll(@PathVariable String id) {
         this.pollService.deletePoll(id);
     }
 
     @DeleteMapping("{uuid}/element/{id}")
-    public void deleteElement(@PathVariable String uuid, @PathVariable Long id) {
-        if(uuid != null && !uuid.isBlank() && id != null) {
-            this.pollService.deleteElement(uuid, id);
+    public AdminResponse deleteElement(@PathVariable String uuid, @PathVariable Long id) {
+        if (uuid != null && !uuid.isBlank() && id != null) {
+            return this.pollService.deleteElement(uuid, id);
+        } else {
+            throw new CommonException("Element/Poll nicht gefunden", HttpStatus.NOT_FOUND);
         }
     }
 

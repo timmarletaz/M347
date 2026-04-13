@@ -36,7 +36,7 @@ public class Element {
     private boolean isActive = true;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "element", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "element", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
     @JsonIgnore
@@ -45,6 +45,7 @@ public class Element {
     private Poll poll;
 
     public void addAnswer(Answer answer) {
+        answer.setElement(this);
         answers.add(answer);
     }
 

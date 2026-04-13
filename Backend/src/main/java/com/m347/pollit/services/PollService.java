@@ -12,6 +12,7 @@ import com.m347.pollit.repositories.PollRepository;
 import com.m347.pollit.requests.*;
 import com.m347.pollit.responses.AdminResponse;
 import com.m347.pollit.responses.ElementSummary;
+import com.m347.pollit.responses.PollDto;
 import com.m347.pollit.responses.SummaryElement;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,13 @@ public class PollService {
     }
 
     @Transactional
-    public Poll getPublicPoll(String uuid) {
-        return this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Umfrage wurde nicht gefunden"));
+    public PollDto getPublicPoll(String uuid) {
+        Poll poll = this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Umfrage wurde nicht gefunden"));
+        List<Element> elements = poll.getElements().stream().filter(Element::isActive).toList();
+        if(elements.isEmpty()) {
+            throw new CommonException("Umfrage beinhaltet keine Elemente", HttpStatus.NOT_FOUND);
+        }
+        return new PollDto(poll.getId(), poll.getTitle(), poll.getUuid(), poll.getDescription(), poll.getCreator(), elements);
     }
 
     @Transactional
@@ -135,10 +141,10 @@ public class PollService {
         this.pollRepository.save(poll);
     }
 
-    public List<Element> editPoll(String uuid, NewElementRequest newElementRequest) {
+    public AdminResponse editPoll(String uuid, NewElementRequest newElementRequest) {
         Poll poll =  this.getPollByUuid(uuid);
         if(newElementRequest.getNewElements().isEmpty()) {
-            return poll.getElements();
+            return this.generateSummary(poll);
         }
         UserEntity user = this.userService.getUserFromSession();
         if(!poll.getCreator().equals(user) && !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
@@ -155,10 +161,10 @@ public class PollService {
             }
         }
 
-        return poll.getElements();
+        return this.generateSummary(poll);
     }
 
-    public void deleteElement(String uuid, Long id) {
+    public AdminResponse deleteElement(String uuid, Long id) {
         Poll poll = this.pollRepository.findByUuid(uuid).orElseThrow(() -> new CommonException("Poll wurde nicht gefunden"));
         UserEntity user = this.userService.getUserFromSession();
         if(!poll.getCreator().equals(user) && !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
@@ -167,6 +173,7 @@ public class PollService {
         Element element = poll.getElements().stream().filter(item -> item.getId().equals(id)).findFirst().orElseThrow(() -> new CommonException("Element wurde nicht gefunden", HttpStatus.NOT_FOUND));
         poll.removeElement(element);
         pollRepository.save(poll);
+        return this.generateSummary(poll);
     }
 
     public void deletePoll(String uuid) {

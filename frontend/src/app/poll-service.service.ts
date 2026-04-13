@@ -25,8 +25,9 @@ export class PollServiceService {
     this.httpClient.get<Poll>(this.baseUrl + "polls/" + uuid, {withCredentials: true}).subscribe(response => {
       this.activePoll.next(response);
     }, error => {
-      console.log(error.error.error);
-      this.alertService.showToast("Es ist etwas schiefgelaufen", "danger", 2500);
+      console.log(error.error);
+      this.router.navigate(["/"]);
+      this.alertService.showToast(error.error.message ||"Es ist etwas schiefgelaufen", "danger", 2500);
     })
   }
 
@@ -64,6 +65,21 @@ export class PollServiceService {
     return this.pollDetails.asObservable();
   }
 
+  async saveNewElement(elements: ElementRequest[], id: string) {
+    if (elements.length > 0) {
+      try {
+        let response = await firstValueFrom(this.httpClient.put<PollDetails>(this.baseUrl + "polls/" + id + "/update", {newElements: elements}, {withCredentials: true}));
+        this.alertService.showToast("Erfolgreich hinzugefügt", "success", 2500);
+        return response;
+      } catch (e) {
+        console.error(e);
+        this.alertService.showToast("Hinzufügen fehlgeschlagen", "danger", 2500);
+        return null;
+      }
+    }
+    return null;
+  }
+
   createPoll(title: string, description: string, elements: ElementRequest[]) {
     this.httpClient.post<Poll>(this.baseUrl + "polls/create", {
       title: title,
@@ -91,5 +107,18 @@ export class PollServiceService {
 
   getPollCode() {
     return this.pollCode.asObservable();
+  }
+
+  async deleteElement(elementId: number, uuid: string) {
+    try {
+      let response = await firstValueFrom(this.httpClient.delete<PollDetails>((this.baseUrl + "polls/" + uuid + "/element/" + elementId)));
+      console.log(response);
+      this.alertService.showToast("Erfolgreich gelöscht", "success", 2000);
+      return response;
+    } catch (e) {
+      console.error(e);
+      this.alertService.showToast("Löschen fehlgeschlagen", "danger", 2000);
+      return null;
+    }
   }
 }

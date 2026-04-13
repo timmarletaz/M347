@@ -2,3 +2,15 @@
   width: 100%;
   height: 100%;
 }
+
+input, select {
+  border: 1px solid gray;
+  &:focus {
+    outline: none;
+    border: 2px solid gray;
+  }
+}
+
+::placeholder {
+  color: #656565;
+}

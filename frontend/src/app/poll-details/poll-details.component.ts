@@ -12,8 +12,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   imports: [
     LoaderComponent,
     ReactiveFormsModule,
-    FormsModule,
-    RouterModule
+    FormsModule
   ],
   templateUrl: './poll-details.component.html',
   styleUrl: './poll-details.component.scss'
@@ -46,10 +45,12 @@ export class PollDetailsComponent {
   }
 
   async deletePoll() {
-    await this.pollService.deletePoll(this.id!);
+    if (confirm("Sind sie sicher, dass sie dieses Element sowie alle dazugehörigen Daten löschen möchten?")) {
+      await this.pollService.deletePoll(this.id!);
+    }
   }
 
-  addNewElement() {
+  async addNewElement() {
     if (this.type && this.label && this.placeholder) {
       this.newElements.push({
         label: this.label,
@@ -62,6 +63,23 @@ export class PollDetailsComponent {
       this.label = "";
       this.placeholder = "";
       this.required = false;
+      console.log(this.newElements);
+
+      let response: PollDetails | null = await this.pollService.saveNewElement(this.newElements, this.id!);
+      if (response) {
+        this.pollDetail = response!;
+      }
+    }
+  }
+
+  async deleteElement(elementId: number) {
+    if (confirm("Sind sie sicher, dass sie dieses Element sowie alle dazugehörigen Daten löschen möchten?")) {
+      this.loading = true;
+      let response: PollDetails | null = await this.pollService.deleteElement(elementId, this.id!);
+      this.loading = false;
+      if (response) {
+        this.pollDetail = response!;
+      }
     }
   }
 

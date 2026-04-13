@@ -28,14 +28,16 @@ public class Poll {
     @JoinColumn(name = "creator_id")
     private UserEntity creator;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "poll", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "poll", orphanRemoval = true)
     private List<Element> elements = new ArrayList<>();
 
     public void addElement(Element element) {
+        element.setPoll(this);
         elements.add(element);
     }
 
     public void addElement(Element element, int index) {
+        element.setPoll(this);
         elements.get(index).setActive(false);
         elements.add(index, element);
     }
