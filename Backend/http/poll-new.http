@@ -1,0 +1,115 @@
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "tim@gmail.com",
+  "password": "123456789"
+}
+
+###
+
+GET http://localhost:8080/api/auth/csrf
+
+> {%
+    client.global.set("token", response.body.token);
+    console.log(client.global.get("token"));
+%}
+
+###
+
+POST http://localhost:8080/api/polls/create
+Content-Type: application/json
+X-XSRF-TOKEN: {{ token }}
+
+{
+  "description": "Test",
+  "title": "Umfrage zu Test",
+  "elements": [{
+    "label": "Test",
+    "placeholder": "Test Input",
+    "type": "NUMBER",
+    "required": false
+  },
+    {
+      "required": true,
+      "type": "EMAIL",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "CHECKBOX",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "DATE",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "NUMBER",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "SLIDER",
+      "placeholder": "Test",
+      "label": "Hallo"
+    },
+    {
+      "required": true,
+      "type": "TEXT",
+      "placeholder": "Test",
+      "label": "Hallo"
+    }
+  ]
+}
+
+> {%
+    client.global.set("id", response.body.uuid);
+    console.log(client.global.get("id"));
+%}
+
+###
+
+PUT http://localhost:8080/api/polls/{{id}}/update
+Content-Type: application/json
+X-XSRF-TOKEN: {{ token }}
+
+{
+  "newElements": [
+    {
+      "elementId": 15,
+      "label": "Name",
+      "placeholder": "Ihr Name",
+      "type": "INPUT",
+      "required": true
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/api/polls/{{id}}
+
+###
+
+PUT http://localhost:8080/api/polls/{{id}}/update
+Content-Type: application/json
+X-XSRF-TOKEN: {{ token }}
+
+{
+  "newElements": [
+    {
+      "label": "Nachname",
+      "placeholder": "Ihr Nachname",
+      "type": "INPUT",
+      "required": true
+    }
+  ]
+}
+
